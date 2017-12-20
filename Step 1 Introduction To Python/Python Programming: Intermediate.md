@@ -2,7 +2,7 @@
 
 ## 1: Introduction To Classes And Objects
 
-In this mission, we are going to be introducing the concepts behind classes and objects. In your path to becoming proficient in Python, you have been introduced to classes and objects everywhere without knowing it. Python is known as an **object-oriented programming language** which means that everything in Python is an object! This means that integers, floats, strings, and anything else you can imagine is an object which is created from a class.
+In this mission, we are going to be introducing the concepts behind **classes** and **objects**. In your path to becoming proficient in Python, you have been introduced to classes and objects everywhere without knowing it. Python is known as an **object-oriented programming language** which means that **everything in Python is an object**! This means that integers, floats, strings, and anything else you can imagine is an object which is created from a class.
 
 Anytime you assign an integer, string, or another type to a variable you have been creating an object from their respective classes.
 
@@ -46,27 +46,14 @@ Each row in our data set represents a game. Here's a description of the columns:
 
 To create a class in Python, we use the keyword `class` followed by the desired class name. The class name, by convention, is in [`PascalCase`](https://en.wikipedia.org/wiki/PascalCase) where the first letter of every word is capitalized. Here is how you would define the dataset class:
 
-```
-
-```
-
-```
+```python
 class Dataset:
-```
-
-```
     def __init__(self):
-```
-
-```
         self.type = "csv"
 ```
 
 Let's break this down piece by piece. Within the declaration of the `class` we have written what looks like the function syntax for the method `__init__`. Remember from before that internal functions of a class are called methods. Before we explain what `__init__` does, let's see the syntax on how to create a dataset object.
 
-```
-
-```
 
 ```
 new_dataset = Dataset()
@@ -79,10 +66,6 @@ This `new_dataset` variable refers to an instance of the Dataset class. When cre
 To access the attributes of a class we use **dot notation** like the following:
 
 ```
-
-```
-
-```
 print(new_dataset.type)   # prints out "csv"
 ```
 
@@ -91,10 +74,6 @@ Let's take a look back at where we defined the `__init__` method. You can see th
 Python uses this `self` variable to refer to the created object so you can interact with the instance data. If you didn't have `self`, then the class wouldn't know where to store the internal data you wanted to keep. By convention, `self` is used to define the instance even though it's possible to name it whatever you want. It is highly recommended to use `self` because any project that is built using Python will also give it that name.
 
 When creating an object, you never have to worry about passing in a `self` object on instantiation since this is done automatically by the Python interpreter. If this were not the case then it would look like something like the following:
-
-```
-
-```
 
 ```
 new_dataset = Dataset(new_dataset)
@@ -110,7 +89,6 @@ This looks odd and it would be tedious to do every time you create an object so 
 - Print the `type` attribute of the `dataset` instance.
 
 ```
-
 class Dataset:
     def __init__(self):
         self.type = "csv"
@@ -126,58 +104,25 @@ Before, we saw that we can initialize objects with attributes that we explicitly
 To dynamically add data to our dataset object on instantiation, we have to add an additional argument to the `__init__`method (remembering to keep `self`first!).
 
 ```
-
-```
-
-```
 class Dataset:
-```
-
-```
     def __init__(self, data):
-```
-
-```
         self.data = data
 ```
 
 Then, to create an object with the data, we pass it in when instantiating the class. A reminder from last mission is that we can use the `csv` module to read a data set from a csv file:
 
 ```
-
-```
-
-```
 f = open("somefile.csv", 'r')
-```
-
-```
 csvreader = csv.reader(f)
-```
-
-```
 csv_data = list(csvreader)
-```
 
-```
-
-```
-
-```
 csv_dataset = Dataset(csv_data)
 ```
 
 Recall that `__init__` is a method is just another way of saying a function defined in a class. Therefore, we can treat it as any function you've seen before. As a result, we can pass any amount of arguments when instantiating an object. You can also access the new attribute you set by using the dot notation described previously.
 
 ```
-
-```
-
-```
 # prints the first 10 rows of the csv data.
-```
-
-```
 print(csv_dataset.data[:10])
 ```
 
@@ -209,35 +154,12 @@ dataset_data = nfl_dataset.data
 
 Instantiating our objects with attributes is great but we can do even more by having additional instance methods. From a previous example in the code, we printed the first 10 rows of the data by calling the `print()` function outside of the class. Let's make a new method that will always print out the first 10 rows.
 
-```
-
-```
-
-```
+```python
 class Dataset:
-```
-
-```
     def __init__(self, data):
-```
-
-```
         self.data = data
-```
-
-```
-
-```
-
-```
     def print_data(self):
-```
-
-```
         # New method **remember to add self**.
-```
-
-```
         print(self.data[:10])
 ```
 
@@ -245,15 +167,8 @@ Like `__init__`, we need to add `self` to the first parameter of this instance m
 
 Let's create an instance of the dataset again and print the first 10 rows.
 
-```
-
-```
-
-```
+```python
 nfl_dataset = Dataset(nfl_data)
-```
-
-```
 nfl_dataset.print_data()  # Prints the first 10 rows.
 ```
 
@@ -288,26 +203,10 @@ nfl_dataset.print_data(5)
 You may have noticed when printing the data that the first element in the list of rows contains some header information. Using the `csv` module, we don't have a way of extracting this header unless we grab the first element. However, with our dataset class, we could add an instance method that would grab the first result of `self.data`, set it as a `header` attribute, and then remove it from the `data`attribute. Let's try that now:
 
 ```
-
-```
-
-```
 ...
-```
-
-```
 def extract_header(self):
-```
-
-```
     self.header = self.data[0]
-```
-
-```
     self.data = self.data[1:]  # set data 
-```
-
-```
 ...
 ```
 
@@ -322,7 +221,7 @@ Let's add the header extraction to the initializer now.
 - Add the `extract_header` code to the initializer and set the header data to `self.header`.
 - Create a variable called `nfl_header` and set it to the header attribute
 
-```
+```python
 class Dataset:
     def __init__(self, data):
         self.data = data
@@ -345,15 +244,8 @@ Looking at the `nfl_data`, you may notice that the header's index lines up with 
 
 A great function to help us search the header and extract both the index and label to check is called `enumerate`. Here's an example on how it works:
 
-```
-
-```
-
-```
+```python
 for idx, value in enumerate(['foo', 'bar']):
-```
-
-```
     print(idx, value)
 ```
 
@@ -406,26 +298,10 @@ Let's add a `count_unique` method to our class so that a user can choose a label
 Recall that we can use the `self`parameter to access instance methods in the same way that we accessed an attribute. Here's an example of how you can access a method within the declaration of another instance method.
 
 ```
-
-```
-
-```
 ...
-```
-
-```
 def other_instance_method(self):
-```
-
-```
     results = self.get_results()
-```
-
-```
     ...
-```
-
-```
 ...
 ```
 
@@ -435,28 +311,7 @@ def other_instance_method(self):
 - Get the unique set of items from the `column` method and return the total count.
 - Use the instance method to assign the number of unique term values of `years` to `total_years`.
 
-```
-class Dataset:
-    def __init__(self, data):
-        self.header = data[0]
-        self.data = data[1:]
-    
-    def column(self, label):
-        if label not in self.header:
-            return None
-        
-        index = 0
-        for idx, element in enumerate(self.header):
-            if label == element:
-                index = idx
-        
-        column = []
-        for row in self.data:
-            column.append(row[index])
-        return column
-    
-    # Add your count unique method here
-
+```python
 nfl_dataset = Dataset(nfl_data)
 class Dataset:
     def __init__(self, data):
@@ -493,21 +348,11 @@ With all the features of the `Dataset` class, we want to make it easier for the 
 
 Across all python classes, there are a [list of special methods](https://docs.python.org/3/reference/datamodel.html#basic-customization) that we can implement. Each one of provides additional customization that the python interpreter will use to enhance your object. When we implemented `__init__`, it told the python interpreter that anything within that method is what we want to initialize when we create our object.
 
-One special method is `__str__` which tells the python interpreter how to represent your object as a string. Whenever we try to convert the object into a string or when we want to print out that object, we can use `__str__` method to customize the way it looks when we display the object using the `print()`function. Use the console and check what the `nfl_dataset` object looks like by doing the following:
-
-```
-
-```
+One special method is `__str__` which tells the python interpreter how to *represent your object as a string*. Whenever we try to convert the object into a string or when we want to print out that object, we can use `__str__` method to customize the way it looks when we display the object using the `print()`function. Use the console and check what the `nfl_dataset` object looks like by doing the following:
 
 ```
 >> nfl_dataset = Dataset(nfl_data)
-```
-
-```
 >> nfl_dataset
-```
-
-```
 <__main__.Dataset instance at 0x10abc23b0>
 ```
 
@@ -520,35 +365,6 @@ This doesn't really tell the user what the dataset looks like internally so let'
 - Create an instance of the class called `nfl_dataset` and call print on it.
 
 ```
-class Dataset:
-    def __init__(self, data):
-        self.header = data[0]
-        self.data = data[1:]
-    
-    # Add the special method here
-    
-    def column(self, label):
-        if label not in self.header:
-            return None
-        
-        index = 0
-        for idx, element in enumerate(self.header):
-            if label == element:
-                index = idx
-        
-        column = []
-        for row in self.data:
-            column.append(row[index])
-        return column
-    
-        
-    def count_unique(self, label):
-        count = 0
-        for item in set(self.column(label)):
-            count += 1
-        return count
-
-nfl_dataset = Dataset(nfl_data)
 class Dataset:
     def __init__(self, data):
         self.header = data[0]
@@ -597,26 +413,10 @@ When you start to write classes in the real world, you will need to write robust
 In this mission, we'll be working with `legislators.csv`, which records information on every historical member of the U.S. Congress. Here's a preview of the dataset:
 
 ```
-
-```
-
-```
 last_name,first_name,birthday,gender,type,state,party
-```
-
-```
 Bassett,Richard,1745-04-02,M,sen,DE,Anti-Administration
-```
-
-```
 Bland,Theodorick,1742-03-21,,rep,VA,
-```
-
-```
 Burke,Aedanus,1743-06-16,,rep,SC,
-```
-
-```
 Carroll,Daniel,1730-07-22,M,rep,MD,
 ```
 
@@ -639,18 +439,10 @@ As we learn, we'll work on finding the most common names for U.S. legislators. W
 When exploring data, it's often useful to extract the unique elements in a *list*. For example, this list has duplicate values:
 
 ```
-
-```
-
-```
 ["Dog", "Cat", "Hippo", "Dog", "Cat", "Dog", "Dog", "Cat"]
 ```
 
 Extracting the unique elements will give us:
-
-```
-
-```
 
 ```
 ["Dog", "Cat", "Hippo"]
@@ -662,47 +454,33 @@ The result of this conversion is a *set* - a data type where each element is uni
 
 You can create a *set* with the [set()](https://docs.python.org/3.5/library/stdtypes.html?highlight=set#set) function. Simply pass a *list* into the function, and the function will convert it:
 
-```
-
-```
-
-```
+```python
 unique_animals = set(["Dog", "Cat", "Hippo", "Dog", "Cat", "Dog", "Dog", "Cat"])
+
+print(unique_animals)
 ```
 
-```
-print(unique_animals)
+```R
+unique_animals <- unique(c("Dog", "Cat", "Hippo", "Dog", "Cat", "Dog", "Dog", "Cat"))
 ```
 
 We'll get `{'Hippo', 'Cat', 'Dog'}` as a result. Note that the interpreter encloses *Sets* in curly braces when it prints them. Because *Sets* don't have indexes, the items in a set may display in a different order each time you print it.
 
 You can add items to a *set* using the [add()](https://docs.python.org/3.5/library/stdtypes.html?highlight=set#set.add) method:
 
-```
-
-```
-
-```
+```python
 unique_animals.add("Tiger")
 ```
 
 Finally, you can remove items from a *set* with the [remove()](https://docs.python.org/3.5/library/stdtypes.html?highlight=set#set.remove) method:
 
-```
-
-```
-
-```
+```python
 unique_animals.remove("Dog")
 ```
 
 If we want to convert a *set* to a *list*, we can use the [list()](https://docs.python.org/3.5/tutorial/datastructures.html) method:
 
-```
-
-```
-
-```
+```python
 list(unique_animals)
 ```
 
@@ -770,34 +548,13 @@ We'll work with missing data in more depth later on, but for now, we'll focus on
 Here's how we could replace any missing values in the `party` column with the *string* `No Party`:
 
 ```
-
-```
-
-```
 rows = [
-```
-
-```
     ["Bassett", "Richard", "1745-04-02", "M", "sen", "DE", "Anti-Administration"],
-```
-
-```
     ["Bland", "Theodorick", "1742-03-21", "", "rep", "VA", ""]
-```
-
-```
 ]
-```
 
-```
 for row in rows:
-```
-
-```
     if row[6] == "":
-```
-
-```
         row[6] = "No Party"
 ```
 
@@ -827,18 +584,8 @@ While we're looking for the most common names of U.S. legislators, the year of b
 As you may have noticed, the `birthday`column has the format `1820-01-02`, which is hard to work with. However, it's common to reformat values to simplify them. In this case, we can split the date into its component parts:
 
 ```
-
-```
-
-```
 date = "1820-01-02"
-```
-
-```
 parts = date.split("-")
-```
-
-```
 print(parts)
 ```
 
@@ -866,10 +613,6 @@ for row in legislators:
 Converting a column to a different data type is a common operation in data analysis. For example, we just extracted the `year` on the previous screen, but it's in *string* form. To find the average year in which legislators were born, we'll need to convert the data to *integers* first. We can perform this conversion with the [int()](https://docs.python.org/3/library/functions.html#int) function. The only challenge is that the `year` column has missing values. If we try to convert a missing value, we'll get an error:
 
 ```
-
-```
-
-```
 int('')
 ```
 
@@ -877,23 +620,10 @@ The code above will cause a `ValueError`, because an empty *string* can't be con
 
 Not all errors should halt execution, though. Sometimes we expect a certain type of error, and want to handle it in a specific way that allows the code to complete. We can manage errors with something known as a *try/except block*. If you surround the code that causes an error with a *try/except block*, the error will be handled, and the code will continue to run:
 
-```
-
-```
-
-```
+```python
 try:
-```
-
-```
     int('')
-```
-
-```
 except Exception:
-```
-
-```
     print("There was an error")
 ```
 
@@ -916,24 +646,11 @@ except Exception:
 
 When the Python interpreter generates an [exception](https://docs.python.org/3/tutorial/errors.html), it actually creates an instance of the `Exception` class. This class has certain properties that help us debug the error. We can access the instance of the `Exception` class in the `except` statement body:
 
-```
-
-```
-
-```
+```python
 try:
-```
-
-```
     int('')
-```
-
-```
 except Exception as exc:
-```
-
-```
-    print(type(exc))
+    print(type(exc)) # <class 'ValueError'>
 ```
 
 In the example above, we use the `as`statement to assign the instance of the `Exception` class to the variable `exc`. We can then access the variable in the `except` statement body. Printing `type(exc)` will display the type of `Exception` that occured in the `try`statement body.
@@ -941,23 +658,10 @@ In the example above, we use the `as`statement to assign the instance of the `Ex
 We can also convert the `Exception` class to a *string* and print out the error message:
 
 ```
-
-```
-
-```
 try:
-```
-
-```
     int('')
-```
-
-```
 except Exception as exc:
-```
-
-```
-    print(str(exc))
+    print(str(exc)) # invalid literal for int() with base 10: ''
 ```
 
 This will print a message that will help us debug the error.
@@ -982,100 +686,39 @@ except Exception as exc:
 On the previous screen, we printed a message each time an error occurred:
 
 ```
-
-```
-
-```
 try:
-```
-
-```
     int('')
-```
-
-```
 except Exception:
-```
-
-```
     print("There was an error")
 ```
 
 However, there are times when we don't want to do anything specific to handle errors; we just want the code to keep running. This is common when looping over a long *list*, and performing the same operation multiple times. In cases like this, printing lots of errors messages would be fairly annoying. For example, running the following code results in many errors:
 
 ```
-
-```
-
-```
 numbers = [1,2,3,4,5,6,7,8,9,10]
-```
-
-```
 for i in numbers:
-```
-
-```
     try:
-```
-
-```
         int('')
-```
-
-```
     except Exception:
-```
-
-```
         print("There was an error")
 ```
 
 Unfortunately, we can't just leave out the print statement to avoid this, since that would cause an error:
 
 ```
-
-```
-
-```
 numbers = [1,2,3,4,5,6,7,8,9,10]
-```
-
-```
 for i in numbers:
-```
-
-```
     try:
-```
-
-```
         int('')
-```
-
-```
     except Exception:
 ```
 
 That's because any Python statement that ends in a colon (`:`) needs to have an indented body below it. Instead, we can use the `pass` keyword to avoid generating an error:
 
 ```
-
-```
-
-```
 try:
-```
-
-```
     int('')
-```
-
-```
 except Exception:
-```
-
-```
     pass
 ```
 
@@ -1100,38 +743,13 @@ for year in birth_years:
 Let's convert all of the birth years in `legislators` to *integers*. To change the items in a *list of lists*, we need to loop over the top-level list (`items`):
 
 ```
-
-```
-
-```
 items = [          
-```
-
-```
     [1, "1", 2],    
-```
-
-```
     [2, "", 3],
-```
-
-```
     [5, "5", 3]
-```
-
-```
 ]
-```
 
-```
-
-```
-
-```
 for item in items:
-```
-
-```
     item[1] = int(item[1])
 ```
 
@@ -1158,50 +776,16 @@ for row in legislators:
 We finished parsing the birth years to *integers*, but now we have several birth years with the value `0`. Here are the first few items in the `birth_year` column of `legislators`:
 
 ```
-
-```
-
-```
 [1745,
-```
-
-```
  1742,
-```
-
-```
  1743,
-```
-
-```
  1730,
-```
-
-```
  1739,
-```
-
-```
  0,
-```
-
-```
  1738,
-```
-
-```
  1745,
-```
-
-```
  1748,
-```
-
-```
  ...
-```
-
-```
 ]
 ```
 
@@ -2999,17 +2583,7 @@ for suspension in nfl_suspensions:
 
 ```
         years[row_year] = 1
-```
 
-16
-
-```
-
-```
-
-17
-
-```
 print(years)
 ```
 
