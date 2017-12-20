@@ -2552,122 +2552,27 @@ def spell_check(vocabulary_file, text_file, special_characters=[",",".","'",";",
     
     for ts in tokenized_text:
         if ts not in tokenized_vocabulary and ts != '':
-```
-
-```
             misspelled_words.append(ts)
-```
-
-```
     return(misspelled_words)
-```
 
-```
 final_misspelled_words = spell_check(vocabulary_file="dictionary.txt", text_file="story.txt")
-```
-
-```
 print(final_misspelled_words)
-```
 
-```
 # Add an ending bracket for the `special_characters` default value.
-```
-
-```
 def spell_check(vocabulary_file, text_file, special_characters=[",",".","'",";","\n"]):
-```
-
-18
-
-```
     misspelled_words = []
-```
-
-19
-
-```
     vocabulary = open(vocabulary_file).read()
-```
-
-20
-
-```
     # Add ending parentheses.
-```
-
-21
-
-```
     text = open(text_file).read()
-```
-
-22
-
-```
-    
-```
-
-23
-
-```
     # Fix indentation.
-```
-
-24
-
-```
     tokenized_vocabulary = tokenize(vocabulary, special_characters)
-```
-
-25
-
-```
     tokenized_text = tokenize(text, special_characters, True)
-```
-
-26
-
-```
-    
-```
-
-27
-
-```
     for ts in tokenized_text:
-```
-
-28
-
-```
         if ts not in tokenized_vocabulary and ts != '':
-```
-
-29
-
-```
             misspelled_words.append(ts)
-```
-
-30
-
-```
     return(misspelled_words)
-```
 
-31
-
-
-32
-
-```
 final_misspelled_words = spell_check(vocabulary_file="dictionary.txt", text_file="story.txt")
-```
-
-33
-
-```
 print(final_misspelled_words)
 ```
 
