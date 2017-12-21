@@ -1297,86 +1297,19 @@ Let's read the file into Python and explore the data to become more familiar wit
   - Use a `for` loop to iterate over the *list* in `nfl_suspensions` representing the `year` column:Extract that row's value for the `year` column and assign it to `row_year`.If `row_year` is already a key in `years`, add `1` to the value for that key.If `row_year` isn't already a key in `years`, set the value for the key to `1`.
 - Use the `print()` function to display the *dictionary* `years`.
 
-```
+```python
 import csv
-```
-
-3
-
-```
-f = open("nfl_suspensions_data.csv")
-```
-
-4
-
-```
-nfl_suspensions =  list(csv.reader(f))
-```
-
-5
-
-```
+f = open("nfl_suspensions_data.csv") # file handler
+nfl_suspensions = list(csv.reader(f))
 nfl_suspensions = nfl_suspensions[1:]
-```
 
-6
-
-```
-
-```
-
-7
-
-```
-years_column = nfl_suspensions[5]
-```
-
-8
-
-```
 years = {}
-```
-
-9
-
-```
-
-```
-
-10
-
-```
 for suspension in nfl_suspensions:
-```
-
-11
-
-```
-    row_year = suspension[5]
-```
-
-12
-
-```
-    if row_year in years:
-```
-
-13
-
-```
-        years[row_year] = years[row_year] + 1
-```
-
-14
-
-```
-    else:
-```
-
-15
-
-```
-        years[row_year] = 1
+  row_year = suspension[5]
+  if row_year in years:
+    years[row_year] += 1
+  else:
+    years[row_year] = 1
 
 print(years)
 ```
