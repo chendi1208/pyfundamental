@@ -821,27 +821,12 @@ In the previous mission, we worked with `legislators.csv`, which contains inform
 
 We'll continue to work with the same data set in this mission. Here's a preview of it in *CSV* format:
 
-```
-
-```
 
 ```
 last_name,first_name,birthday,gender,type,state,party,birth_year
-```
-
-```
 Bassett,Richard,1745-04-02,M,sen,DE,Anti-Administration,1745
-```
-
-```
 Bland,Theodorick,1742-03-21,M,rep,VA,1742
-```
-
-```
 Burke,Aedanus,1743-06-16,M,rep,SC,1743
-```
-
-```
 Carroll,Daniel,1730-07-22,M,rep,MD,1730
 ```
 
@@ -858,43 +843,18 @@ The data set includes the following columns:
 
 In this mission, we'll use the data to find the most common names among U.S. legislators of each gender. Before diving into this, we'll explore some critical concepts, such as enumeration.
 
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
-
 ## 2: Enumerate
 
 There are many situations where we'll need to iterate over multiple *lists* in tandem, such as this one:
 
-```
-
-```
 
 ```
 animals = ["Dog", "Tiger", "SuperLion", "Cow", "Panda"]
-```
-
-```
 viciousness = [1, 5, 10, 10, 1]
-```
 
-```
-
-```
-
-```
 for animal in animals:
-```
-
-```
     print("Animal")
-```
-
-```
     print(animal)
-```
-
-```
     print("Viciousness")
 ```
 
@@ -902,27 +862,12 @@ In the example above, we have two *lists*. The second *list* describes the vicio
 
 Unfortunately, we can't just loop through `animals`, and then tap into the second *list*. Python has an [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function that can help us with this, though. The [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function allows us to have two variables in the body of a for loop -- an index, and the value.
 
-```
-
-```
 
 ```
 for i, animal in enumerate(animals):
-```
-
-```
     print("Animal Index")  ## label
-```
-
-```
     print(i)
-```
-
-```
     print("Animal") ## label
-```
-
-```
     print(animal)
 ```
 
@@ -934,39 +879,15 @@ On every iteration of the loop, the value for `i` will become the value of the i
 
 Here's another example of how we can use the [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function to iterate over multiple *lists* in tandem:
 
-```
-
-```
 
 ```
 animals = ["Dog", "Tiger", "SuperLion", "Cow", "Panda"]
-```
-
-```
 viciousness = [1, 5, 10, 10, 1]
-```
 
-```
-
-```
-
-```
 for i, animal in enumerate(animals):
-```
-
-```
     print("Animal")
-```
-
-```
     print(animal)
-```
-
-```
     print("Viciousness")
-```
-
-```
     print(viciousness[i])
 ```
 
@@ -979,139 +900,32 @@ In this example, we use the index variable `i` to index the `viciousness` *list*
   - Print the item from `ships` at the current index.
   - Print the item from `cars` at the current index.
 
- Need a hint?
-
-BACKNEXT STEP: 3
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
 ```
 ships = ["Andrea Doria", "Titanic", "Lusitania"]
-```
-
-2
-
-```
 cars = ["Ford Edsel", "Ford Pinto", "Yugo"]
-```
-
-3
-
-```
-
-```
-
-4
-
-```
 for i, ship in enumerate(ships):
-```
-
-5
-
-```
     print(ship)
-```
-
-6
-
-```
     print(cars[i])
 ```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-ships = ["Andrea Doria", "Titanic", "Lusitania"]
-```
-
-2
-
-```
-cars = ["Ford Edsel", "Ford Pinto", "Yugo"]
-```
-
-3
-
-```
-for i, ship in enumerate(ships):
-```
-
-4
-
-```
-    print(ship)
-```
-
-5
-
-```
-    print(cars[i])
-```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.2.3.4.5.6.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 3: Adding Columns
 
 We can even use the [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) function to add columns to *lists of lists*. For example, here's some starter code:
 
-```
-
-```
 
 ```
 door_count = [4, 4]
-```
-
-```
 cars = [
-```
-
-```
         ["black", "honda", "accord"],
-```
-
-```
         ["red", "toyota", "corolla"]
-```
-
-```
        ]
 ```
 
 We can add a column to `cars` by appending a value to each inner *list*:
 
-```
-
-```
 
 ```
 for i, car in enumerate(cars):
-```
-
-```
     car.append(door_count[i])
 ```
 
@@ -1130,123 +944,28 @@ Let's reinforce what we've learned by completing an exercise.
 - Append the item in `trees` that has the same index (as the current `thing`) to the end of each row in `things`.
 - After the code runs, `things` should have an extra column.
 
- Need a hint?
-
-BACKNEXT STEP: 4
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
+```python
 things = [["apple", "monkey"], ["orange", "dog"], ["banana", "cat"]]
-```
-
-2
-
-```
 trees = ["cedar", "maple", "fig"]
-```
-
-3
-
-```
-
-```
-
-4
-
-```
-for i, thing in enumerate(things):
-```
-
-5
-
-```
-    thing.append(trees[i])
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-things = [["apple", "monkey"], ["orange", "dog"], ["banana", "cat"]]
-```
-
-2
-
-```
-trees = ["cedar", "maple", "fig"]
-```
-
-3
-
-```
 for i, row in enumerate(things):
-```
-
-4
-
-```
     row.append(trees[i])
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.2.3.4.5.6.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 4: List Comprehensions
 
 We've written many short *for loops* to manipulate *lists*. Here's an example:
 
-```
-
-```
-
-```
+```python
 animals = ["Dog", "Tiger", "SuperLion", "Cow", "Panda"]
-```
 
-```
-
-```
-
-```
 animal_lengths = []
-```
-
-```
 for animal in animals:
-```
-
-```
-    animal_lengths.append(len(animal))
+    animal_lengths.append(len(animal)) # [3, 5, 9, 3, 5]
 ```
 
 It takes three lines to calculate the length of each *string* `animals` this way. However, we can condense this down to one line with a list comprehension:
 
-```
-
-```
-
-```
+```python
 animal_lengths = [len(animal) for animal in animals]
 ```
 
@@ -1270,69 +989,11 @@ List comprehensions are much more compact notation, and can save space when you 
 - Use list comprehension to create a new *list* called `apple_prices_doubled`, where you multiply each item in `apple_prices` by `2`.
 - Use list comprehension to create a new *list* called `apple_prices_lowered`, where you subtract `100` from each item in `apple_prices`.
 
- Need a hint?
-
-BACKNEXT STEP: 5
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
 ```
 apple_prices = [100, 101, 102, 105]
-```
-
-2
-
-```
-apple_prices_doubled = [apple*2 for apple in apple_prices]
-```
-
-3
-
-```
-apple_prices_lowered = [apple-100 for apple in apple_prices]
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-apple_prices = [100, 101, 102, 105]
-```
-
-2
-
-```
 apple_prices_doubled = [price*2 for price in apple_prices]
-```
-
-3
-
-```
 apple_prices_lowered = [price-100 for price in apple_prices]
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.2.3.4.5.6.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 5: Counting Female Names
 
@@ -1341,38 +1002,13 @@ Let's count how many times each female first name occurs in `legislators`. To li
 Here's a preview of what this dictionary will look like:
 
 ```
-
-```
-
-```
 {
-```
-
-```
     'Nancy': 1, 
-```
-
-```
     'Sandy': 1, 
-```
-
-```
     'Carolyn': 1, 
-```
-
-```
     'Melissa': 2, 
-```
-
-```
     'Jo Ann': 2,
-```
-
-```
     ...
-```
-
-```
 }
 ```
 
@@ -1385,195 +1021,40 @@ Now, let's work on creating it!
 - If the `gender` column of the row equals `F` and the `year`column is greater than `1940`:Assign the `first_name` column of the row to the variable `name`.If `name` is in `name_counts`:Add `1` to the value associated with `name` in `name_counts`.If `name` isn't in `name_counts`:Set the value associated with `name` in `name_counts` to `1`.
 - When the loop finishes, `name_counts` should contain each unique name in the `first_name` column of `legislators`as a key, and the corresponding number of times it appeared as the value.
 
- Need a hint?
-
-BACKNEXT STEP: 6
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
 ```
 name_counts = {}
-```
-
-2
-
-```
 for row in legislators:
-```
-
-3
-
-```
-    if row[3] == "F" and row[7] > 1940:
-```
-
-4
-
-```
-        name = row[1]
-```
-
-5
-
-```
-        if name in name_counts:
-```
-
-6
-
-```
-            name_counts[name] = name_counts[name] + 1
-```
-
-7
-
-```
-        else:
-```
-
-8
-
-```
-            name_counts[name] = 1
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-
-```
-
-2
-
-```
-name_counts = {}
-```
-
-3
-
-```
-for row in legislators:
-```
-
-4
-
-```
     gender = row[3]
-```
-
-5
-
-```
     year = row[7]
-```
-
-6
-
-```
     if gender == "F" and year > 1940:
-```
-
-7
-
-```
         name = row[1]
-```
-
-8
-
-```
         if name in name_counts:
-```
-
-9
-
-```
             name_counts[name] = name_counts[name] + 1
-```
-
-10
-
-```
         else:
-```
-
-11
-
-```
             name_counts[name] = 1
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.3.4.5.6.7.End
 
 ## 6: None
 
 Let's say we're trying to find the maximum value in a list. We might write some code that looks like this:
 
-```
-
-```
 
 ```
 values = [50, 80, 100]
-```
-
-```
 max_value = 0
-```
-
-```
 for i in values:
-```
-
-```
     if i > max_value:
-```
-
-```
         max_value = i
 ```
 
 We set `max_value` to a low value so that everything's greater than it. But what if we changed the values list slightly?
 
-```
-
-```
 
 ```
 values = [-50, -80, -100]
-```
-
-```
 max_value = 0
-```
-
-```
 for i in values:
-```
-
-```
     if i > max_value:
-```
-
-```
         max_value = i
 ```
 
@@ -1585,28 +1066,17 @@ The `None` object indicates that the variable has no value. Rather than using th
 
 The [is](https://docs.python.org/3/reference/expressions.html#is) comparison operator checks for object equality. Using `is` instead of `==` prevents some custom classes from resolving to `True` when compared with `None`. We'll explore how to use operators with the `None` object in greater depth during a later mission. For now, let's see what the `variable is None` syntax looks like:
 
-```
 
-```
-
-```
+```python
 values = [-50, -80, -100]
-```
-
-```
 max_value = None
-```
-
-```
 for i in values:
-```
-
-```
     if max_value is None or i > max_value:
+        max_value = i
 ```
 
-```
-        max_value = i
+```R
+max_value <- NULL
 ```
 
 In the example above, we:
@@ -1617,23 +1087,13 @@ In the example above, we:
 - If `max_value` equals None, or if `i > max_value`, then we assign the value of `i` to `max_value`.
 - At the end of the loop, `max_value` will equal `-50`, which is the largest value in `values`.
 
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
-
 ## 7: Comparing With None
 
 Comparing a value to [None](https://docs.python.org/3.5/library/constants.html#None) will usually generate an error. This is actually helpful when we're writing code, because it prevents unexpected variables from being [None](https://docs.python.org/3.5/library/constants.html#None). For example, this code will cause an error:
 
-```
-
-```
 
 ```
 a = None
-```
-
-```
 a > 10
 ```
 
@@ -1647,29 +1107,17 @@ The Python interpreter will evaluate the two statements in order. If the first s
 
 The following code will assign `True` to `b` if `a` is `None`, or if `a` is greater than `10`:
 
-```
-
-```
 
 ```
 a = None
-```
-
-```
-b = a is None or a > 10
+b = a is None or a > 10 # True
 ```
 
 The same logic applies to an `and`statement. Because both conditions have to be `True`, if the first one is `False`, the Python interpreter won't evaluate the second one. The example below shows how to write an `and` statement involving `None` that won't return an error. It will assign `True` to `b` if `a` does not equal `None` and `a` is greater than `10`:
 
-```
-
-```
 
 ```
 a = None
-```
-
-```
 b = a is not None and a > 10
 ```
 
@@ -1682,69 +1130,12 @@ Let's give this a try in our next exercise!
 - Append the result of the check to `checks`.
 - When finished, `checks` should be a *list* of Booleans indicating whether or not the corresponding items in `values` are not None and greater than `30`.
 
- Need a hint?
-
-BACKNEXT STEP: 8
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
 ```
 values = [None, 10, 20, 30, None, 50]
-```
-
-2
-
-```
 checks = []
-```
-
-3
-
-```
 checks = [x is not None and x > 30 for x in values]
+# [False, False, False, False, False, True]
 ```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-values = [None, 10, 20, 30, None, 50]
-```
-
-2
-
-```
-checks = []
-```
-
-3
-
-```
-checks = [x is not None and x > 30 for x in values]
-```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.5.6.7.8.9.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 8: Highest Female Name Count
 
@@ -1754,39 +1145,15 @@ In order to extract the most common names from this dictionary, we need to deter
 
 We can iterate through all of the keys in a dictionary like this:
 
-```
-
-```
 
 ```
 fruits = {
-```
-
-```
         "apple": 2,
-```
-
-```
         "orange": 5,
-```
-
-```
         "melon": 10
-```
-
-```
     }
-```
 
-```
-
-```
-
-```
 for fruit in fruits:
-```
-
-```
     rating = fruits[fruit]
 ```
 
@@ -1802,126 +1169,28 @@ Let's identify the highest totals in the next exercise.
 - If `max_value` is `None`, or `count` is greater than `max_value`:Assign `count` to `max_value`.
 - At the end of the loop, `max_value` will contain the largest value in `name_counts`.
 
- Need a hint?
-
-BACKNEXT STEP: 9
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-values = [None, 10, 20, 30, None, 50]
-```
-
-2
-
-```
-checks = []
-```
-
-3
-
-```
-checks = [x is not None and x > 30 for x in values]
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-
-```
-
-2
-
-```
+```python
 max_value = None
-```
-
-3
-
-```
 for k in name_counts:
-```
-
-4
-
-```
     count = name_counts[k]
-```
-
-5
-
-```
     if max_value is None or count > max_value:
-```
-
-6
-
-```
         max_value = count
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.6.7.8.9.10.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 9: The Items Method
 
 The code we used on the previous screen to access the keys and values in a dictionary was slightly awkward. We can simplify this process with the [items()](https://docs.python.org/3.5/library/stdtypes.html#dict.items) method, which allows us to iterate through keys and values at the same time.
 
-```
-
-```
 
 ```
 fruits = {
-```
-
-```
     "apple": 2,
-```
-
-```
     "orange": 5,
-```
-
-```
     "melon": 10
-```
-
-```
 }
-```
 
-```
-
-```
-
-```
 for fruit, rating in fruits.items():
-```
-
-```
-    print(rating)
+    print(rating) # 2 5 10
 ```
 
 The [items()](https://docs.python.org/3.5/library/stdtypes.html#dict.items) method makes our code clearer and more compact.
@@ -1932,73 +1201,18 @@ The [items()](https://docs.python.org/3.5/library/stdtypes.html#dict.items) meth
 - Print each key in `plant_types`.
 - Print each value in `plant_types`.
 
- Need a hint?
-
-BACKNEXT STEP: 10
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-values = [None, 10, 20, 30, None, 50]
-```
-
-2
-
-```
-checks = []
-```
-
-3
-
-```
-checks = [x is not None and x > 30 for x in values]
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
+```python
 plant_types = {"orchid": "flower", "cedar": "tree", "maple": "tree"}
-```
-
-2
-
-```
 for k,v in plant_types.items():
-```
-
-3
-
-```
     print(k)
+    print(v)
+# orchid
+# flower
+# cedar
+# tree
+# maple
+# tree
 ```
-
-4
-
-```
-    print(v)OPEN CONSOLE
-```
-
-ProgressConceptsQ & A 4
-
-1.7.8.9.10.11.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 10: Finding The Most Common Female Names
 
@@ -2010,127 +1224,10 @@ As we learned on a previous screen, the most common female names occur two times
 - If any value in `name_counts` equals `2`, append its key to `top_female_names`.
 - When you're finished, `top_female_names` will be a list of the most common names of female legislators.
 
- Need a hint?
-
-BACKNEXT STEP: 11
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-top_male_names = []
-```
-
-2
-
-```
-male_name_counts = {}
-```
-
-3
-
-```
-for item in legislators:
-```
-
-4
-
-```
-    if item[3] == "M" and item[7] > 1940:
-```
-
-5
-
-```
-        if item[2] in male_name_counts:
-```
-
-6
-
-```
-            male_name_counts[item] = male_name_counts[item] + 1
-```
-
-7
-
-```
-        else:
-```
-
-8
-
-```
-            male_name_counts[item] = 1
-```
-
-9
-
-```
-highest_male_count = None
-```
-
-10
-
-```
-for k, v in male_name_counts.items():
-```
-
-11
-
-```
-    if highest_male_count is None or v > highest_male_count:
-```
-
-12
-
-```
-        highest_male_count = v
-```
-
-13
-
-```
-
-```
-
-14
-
-```
-top_male_names = [name for name, count in male_name_counts if count == highest_male_count]
-```
-
-solution.py
-
-``
-
-1
-
 ```
 top_female_names = []
-```
-
-2
-
-```
 top_female_names = [k for k, v in name_counts.items() if v == 2]
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.7.8.9.10.11.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / List Comprehensions
 
 ## 11: Finding The Most Common Male Names
 
@@ -2143,227 +1240,26 @@ Now that we know how to find the most common female names, we can repeat the sam
 - Find the highest value in `male_name_counts` and assign it to `highest_male_count`.
 - Append any keys from `male_name_counts` with a value equal to `highest_male_count` to `top_male_names`.
 
- Need a hint?
-
-BACKFINISH THE MISSION
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
+```python
 top_male_names = []
-```
-
-2
-
-```
 male_name_counts = {}
-```
-
-3
-
-```
-for item in legislators:
-```
-
-4
-
-```
-    name = item[1]
-```
-
-5
-
-```
-    if item[3] == "M" and item[7] > 1940:
-```
-
-6
-
-```
-        if name in male_name_counts:
-```
-
-7
-
-```
-            male_name_counts[name] = male_name_counts[name] + 1
-```
-
-8
-
-```
-        else:
-```
-
-9
-
-```
-            male_name_counts[name] = 1
-```
-
-10
-
-```
-highest_male_count = None
-```
-
-11
-
-```
-for row in male_name_counts:
-```
-
-12
-
-```
-    if highest_male_count is None or male_name_counts[row] > highest_male_count:
-```
-
-13
-
-```
-        highest_male_count = male_name_counts[row]
-```
-
-14
-
-```
-
-```
-
-15
-
-```
-top_male_names = [k for k, v in male_name_counts.items() if v == highest_male_count]
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-top_male_names = []
-```
-
-2
-
-```
-male_name_counts = {}
-```
-
-3
-
-```
 for row in legislators:
-```
-
-4
-
-```
     if row[3] == "M" and row[7] > 1940:
-```
-
-5
-
-```
         name = row[1]
-```
-
-6
-
-```
         if name in male_name_counts:
-```
-
-7
-
-```
             male_name_counts[name] = male_name_counts[name] + 1
-```
-
-8
-
-```
         else:
-```
-
-9
-
-```
             male_name_counts[name] = 1
-```
 
-10
-
-```
-
-```
-
-11
-
-```
 highest_value = None
-```
-
-12
-
-```
 for name,count in male_name_counts.items():
-```
-
-13
-
-```
     if highest_value is None or count > highest_value:
-```
-
-14
-
-```
         highest_value = count
-```
 
-15
-
-```
-
-```
-
-16
-
-```
 for name,count in male_name_counts.items():
-```
-
-17
-
-```
     if count == highest_value:
-```
-
-18
-
-```
         top_male_names.append(name)
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 4
-
-1.7.8.9.10.11.End
 
 # Challenge: Modules, Classes, Error Handling, and List Comprehensions
 
@@ -2372,10 +1268,6 @@ ProgressConceptsQ & A 4
 At Dataquest, we're huge believers in learning through doing, and we hope this shows in your learning experiences. While missions focus on introducing concepts, challenges give you the opportunity to engage in deliberate practice by completing structured problems. You can read more about deliberate practice [on Wikipedia](http://bit.ly/2cJ2Qt7) and [on Nautilus](http://nautil.us/issue/35/boundaries/not-all-practice-makes-perfect).
 
 If you have questions or run into issues, head over to the [Dataquest forums](https://www.dataquest.io/forum/) or our [Slack community](https://www.dataquest.io/chat).
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / Challenge: Modules, Classes, Error Handling, and List Comprehensions
 
 ## 2: Introduction To The Data
 
@@ -2404,104 +1296,6 @@ Let's read the file into Python and explore the data to become more familiar wit
   - Create an empty *dictionary* called `years`.
   - Use a `for` loop to iterate over the *list* in `nfl_suspensions` representing the `year` column:Extract that row's value for the `year` column and assign it to `row_year`.If `row_year` is already a key in `years`, add `1` to the value for that key.If `row_year` isn't already a key in `years`, set the value for the key to `1`.
 - Use the `print()` function to display the *dictionary* `years`.
-
- Need a hint?
-
-BACKNEXT STEP: 3
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-import csv
-```
-
-2
-
-```
-f = open("nfl_suspensions_data.csv",'r')
-```
-
-3
-
-```
-nfl_suspensions = list(csv.reader(f))
-```
-
-4
-
-```
-nfl_suspensions = nfl_suspensions[1:]
-```
-
-5
-
-```
-years = {}
-```
-
-6
-
-```
-for list in nfl_suspensions:
-```
-
-7
-
-```
-    row_year = list[5]
-```
-
-8
-
-```
-    if row_year in years:
-```
-
-9
-
-```
-        years[row_year] = years[row_year] + 1
-```
-
-10
-
-```
-    else:
-```
-
-11
-
-```
-        years[row_year] = 1
-```
-
-12
-
-```
-print(years)
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-
-```
-
-2
 
 ```
 import csv
@@ -2587,16 +1381,6 @@ for suspension in nfl_suspensions:
 print(years)
 ```
 
-OPEN CONSOLE
-
-ProgressConceptsQ & A 9
-
-1.2.3.4.5.6.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / Challenge: Modules, Classes, Error Handling, and List Comprehensions
-
 ## 3: Unique Values
 
 Let's explore the values in these columns by using sets and list comprehensions.
@@ -2606,80 +1390,6 @@ Let's explore the values in these columns by using sets and list comprehensions.
 - Retrieve the unique values in the `team` column and assign the list to `unique_teams`.Use a list comprehension to create a new list containined just the values in the `team` column.Use the `set()` function to return a list containing only the unique values and assign to `unique_teams`.
 - Retrieve the unique values in the `games` column and assign the list to `unique_games`.Use a list comprehension to create a new list containined just the values in the `games` column.Use the `set()` function to return a list containing only the unique values and assign to `unique_games`.
 - Display `unique_teams` and `unique_games`.
-
- Need a hint?
-
-BACKNEXT STEP: 4
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-teams = [item[1] for item in nfl_suspensions]
-```
-
-2
-
-```
-unique_teams = set(teams)
-```
-
-3
-
-```
-
-```
-
-4
-
-```
-games = [item[2] for item in nfl_suspensions]
-```
-
-5
-
-```
-unique_games = set(games)
-```
-
-6
-
-```
-
-```
-
-7
-
-```
-print(unique_teams)
-```
-
-8
-
-```
-print(unique_games)
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-
-```
-
-2
 
 ```
 teams = [row[1] for row in nfl_suspensions]
@@ -2721,16 +1431,6 @@ unique_games = set(games)
 print(unique_games)
 ```
 
-OPEN CONSOLE
-
-ProgressConceptsQ & A 9
-
-1.2.3.4.5.6.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / Challenge: Modules, Classes, Error Handling, and List Comprehensions
-
 ## 4: Suspension Class
 
 Next, let's create a `Suspension` class that we can use to represent each NFL suspension in the data set.
@@ -2739,74 +1439,6 @@ Next, let's create a `Suspension` class that we can use to represent each NFL su
 
 - Create the `Suspension` class.Define the `__init__()` method with the following criteria:The sole required parameter is a *list* representing a row from the dataset.To create a `Suspension` instance, we want to be able to pass in a *list* from `nfl_suspensions`.Currently, we're only interested in storing the `name`, `team`, `games` and `year` columns. Upon instantiation:Set the name value for that row to the `name` property.Set the team value for that row to the `team` property.Set the games value for that row to the `games` property.Set the year value for that row to the `year` property.
 - Create a `Suspension` instance using the third row in `nfl_suspensions`, and assign it to the variable `third_suspension`.
-
- Need a hint?
-
-BACKNEXT STEP: 5
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-class Suspension():
-```
-
-2
-
-```
-    def __init__(self, row):
-```
-
-3
-
-```
-        self.name = row[0]
-```
-
-4
-
-```
-        self.team = row[1]
-```
-
-5
-
-```
-        self.games = row[2]
-```
-
-6
-
-```
-        self.year = row[5]
-```
-
-7
-
-```
-third_suspension = Suspension(nfl_suspensions[2])
-```
-
-solution.py
-
-```
-
-```
-
-1
-
-```
-
-```
-
-2
 
 ```
 class Suspension():
@@ -2848,16 +1480,6 @@ class Suspension():
 third_suspension = Suspension(nfl_suspensions[2])
 ```
 
-OPEN CONSOLE
-
-ProgressConceptsQ & A 9
-
-1.2.3.4.5.6.End
-
-[](https://www.dataquest.io/home)[Dashboard](https://www.dataquest.io/dashboard)GET HELP2CChen 
-
-[Data Analyst](https://www.dataquest.io/path/data-analyst-track) / [Introduction to Python](https://www.dataquest.io/path-step/introduction-python) / [Python Programming: Intermediate](https://www.dataquest.io/course/python-programming-intermediate) / Challenge: Modules, Classes, Error Handling, and List Comprehensions
-
 ## 5: Tweaking The Suspension Class
 
 Let's tweak the `Suspension` class a bit to extend its functionality. Right now, the value for `year` is a *string*, rather than an *integer*. Let's modify the `Suspension`class so that it stores the values as *integers*.
@@ -2868,104 +1490,6 @@ Let's tweak the `Suspension` class a bit to extend its functionality. Right now,
 - Create a method called `get_year()` that returns the `year`value for that `Suspension` instance.
 - Create a `Suspension` instance using the 23rd row, and assign it to `missing_year`.
 - Use the `get_year()` method to assign the year of the `missing_year` suspension instance to `twenty_third_year`.
-
- Need a hint?
-
-BACKNEXT STEP: 6
-
-RUN
-
-script.pylegislators.csv
-
-```
-
-```
-
-1
-
-```
-class Suspension():
-```
-
-2
-
-```
-    def __init__(self,row):
-```
-
-3
-
-```
-        self.name = row[0]
-```
-
-4
-
-```
-        self.team = row[1]
-```
-
-5
-
-```
-        self.games = row[2]
-```
-
-6
-
-```
-        try:
-```
-
-7
-
-```
-            self.year = int(row[5])
-```
-
-8
-
-```
-        except Exception:
-```
-
-9
-
-```
-            self.year = 0
-```
-
-10
-
-```
-    def get_year(self):
-```
-
-11
-
-```
-        return self.year
-```
-
-12
-
-```
-missing_year = Suspension(nfl_suspensions[22])
-```
-
-13
-
-```
-twenty_third_year = Suspension(nfl_suspensions[22]).get_year()
-```
-
-solution.py
-
-```
-
-```
-
-1
 
 ```
 class Suspension():
@@ -3078,12 +1602,6 @@ missing_year = Suspension(nfl_suspensions[22])
 ```
 twenty_third_year = missing_year.get_year()
 ```
-
-OPEN CONSOLE
-
-ProgressConceptsQ & A 9
-
-1.2.3.4.5.6.End
 
 ## 6: Next Steps
 
