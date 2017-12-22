@@ -141,7 +141,7 @@ In files like this, the comma is called the *delimiter*, because it indicates wh
 
 To use , we need to pass a keyword argument called `delimiter` that indicates what character is the delimiter:
 
-```
+```python
 import numpy
 nfl = numpy.genfromtxt("nfl.csv", delimiter=",")
 ```
@@ -166,13 +166,13 @@ We can directly construct arrays from lists using the [numpy.array()](http://doc
 
 The `numpy.array()` function can take a *list* or *list of lists* as input. When we input a list, we get a *one-dimensional array* as a result:
 
-```
+```python
 vector = numpy.array([5, 10, 15, 20])
 ```
 
 When we input a *list of lists*, we get a *matrix* as a result:
 
-```
+```python
 matrix = numpy.array([[5, 10, 15], [20, 25, 30], [35, 40, 45]])
 ```
 
@@ -209,9 +209,14 @@ The code above would result in the *tuple*`(4,)`. This *tuple* indicates that th
 
 For matrices, the `shape` property contains a *tuple* with `2` elements.
 
-```
+```python
 matrix = numpy.array([[5, 10, 15], [20, 25, 30]])
 print(matrix.shape)
+# (2, 3)
+```
+
+```R
+dim(matrix)
 ```
 
 The above code will result in the *tuple*`(2,3)` indicating that `matrix` has `2`*rows* and `3` *columns*.
@@ -239,9 +244,10 @@ Each value in a NumPy *array* has to have the same data type. NumPy data types a
 
 NumPy will automatically figure out an appropriate data type when reading in data or converting *lists* to *arrays*. You can check the data type of a NumPy *array* using the [dtype](http://docs.scipy.org/doc/numpy-1.10.1/user/basics.types.html) property.
 
-```
+```python
 numbers = numpy.array([1, 2, 3, 4])
 numbers.dtype
+# dtype('int64')
 ```
 
 Because `numbers` only contains integers, its data type is `int64`.
@@ -295,9 +301,16 @@ We can do this by:
 - Assign the result to `world_alcohol`.
 - Use the `print()` function to display `world_alcohol`.
 
-```
+```python
 world_alcohol = numpy.genfromtxt("world_alcohol.csv", delimiter=",", dtype="U75", skip_header=1)
 print(world_alcohol)
+#[['1986' 'Western Pacific' 'Viet Nam' 'Wine' '0']
+# ['1986' 'Americas' 'Uruguay' 'Other' '0.5']
+# ['1985' 'Africa' "Cte d'Ivoire" 'Wine' '1.62']
+# ..., 
+# ['1986' 'Europe' 'Switzerland' 'Spirits' '2.54']
+# ['1987' 'Western Pacific' 'Papua New Guinea' 'Other' '0']
+# ['1986' 'Africa' 'Swaziland' 'Other' '5.15']]
 ```
 
 ## 10: Indexing Arrays
@@ -402,7 +415,7 @@ alcohol_consumption = world_alcohol[:,4]
 
 When we want to select one whole dimension, and a slice of the other, we can do this:
 
-```
+```python
 matrix = numpy.array([
                     [5, 10, 15], 
                     [20, 25, 30],
@@ -527,9 +540,10 @@ One of the most powerful aspects of the NumPy module is the ability to make comp
 
 Here's an example of how we can do this with a *vector*:
 
-```
+```python
 vector = numpy.array([5, 10, 15, 20])
 vector == 10
+# array([False,  True, False, False], dtype=bool)
 ```
 
 If you'll recall from an earlier mission, the double equals sign (`==`) compares two values. When used with NumPy, it will compare the second value to each element in the vector. If the value are equal, the Python interpreter returns `True`; otherwise, it returns `False`. It stores the Boolean results in a new vector.
@@ -544,7 +558,7 @@ matrix = numpy.array([
                     [20, 25, 30],
                     [35, 40, 45]
                  ])
-    matrix == 25
+matrix == 25
 ```
 
 The final statement will compare `25` to every element in `matrix`. The result will be a *matrix* where elements are `True` or `False`:
@@ -595,14 +609,13 @@ The code above:
 We can use the same principle to select rows in *matrices*:
 
 ```
-
 matrix = numpy.array([
                 [5, 10, 15], 
                 [20, 25, 30],
                 [35, 40, 45]
              ])
-    second_column_25 = (matrix[:,1] == 25)
-    print(matrix[second_column_25, :])
+second_column_25 = (matrix[:,1] == 25)
+print(matrix[second_column_25, :])
 ```
 
 The code above:
@@ -745,7 +758,7 @@ world_alcohol[is_value_empty, 4] = '0'
 
 We can convert the data type of an *array* with the [astype()](http://docs.scipy.org/doc/numpy-1.10.1/reference/generated/numpy.ndarray.astype.html) method. Here's an example of how this works:
 
-```
+```python
 vector = numpy.array(["1", "2", "3"])
 vector = vector.astype(float)
 ```
@@ -783,13 +796,13 @@ This would add together all of the elements in `vector`, and result in `50`.
 
 With a matrix, we have to specify an additional keyword argument, `axis`. The `axis` dictates which dimension we perform the operation on. `1` means that we want to perform the operation on each *row*, and `0` means on each *column*. The example below performs an operation across each *row*:
 
-```
+```python
 matrix = numpy.array([
                 [5, 10, 15], 
                 [20, 25, 30],
                 [35, 40, 45]
              ])
-    matrix.sum(axis=1)
+matrix.sum(axis=1)
 ```
 
 This would compute the sum for each *row*, resulting in `[30, 75, 120]`.
@@ -823,7 +836,7 @@ To find the total amount the average person in `Canada` drank in `1986`, for exa
 - Extract the fifth column of `canada_1986`, replace any empty strings (`''`) with the *string* `0`, and convert the column to the *float* data type. Assign the result to `canada_alcohol`.
 - Compute the sum of `canada_alcohol`. Assign the result to `total_canadian_drinking`.
 
-```
+```python
 is_canada_1986 = (world_alcohol[:,2] == "Canada") & (world_alcohol[:,0] == '1986')
 canada_1986 = world_alcohol[is_canada_1986,:]
 canada_alcohol = canada_1986[:,4]
