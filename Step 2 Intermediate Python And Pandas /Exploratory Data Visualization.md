@@ -28,7 +28,7 @@ Before we get into visual representations of data, let's first read this CSV fil
 
 When we read the dataset into a DataFrame, pandas will set the data type of the `DATE` column as a text column. Because of how pandas reads in strings internally, this column is given a data type of `object`. We need to convert this column to the `datetime` type using the [pandas.to_datetime()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.to_datetime.html) function, which returns a Series object with the `datetime` data type that we can assign back to the DataFrame:
 
-```
+```python
 import pandas as pd
 df['col'] = pd.to_datetime(df['col'])
 ```
@@ -188,10 +188,10 @@ Matplotlib will accept any iterable object, like NumPy arrays and `pandas.Series
   - y-values should be the first 12 values in the `VALUE`column
 - Display the plot.
 
-```
+```python
 # Assigned first 12 rows to a variable just for easy reference.
 first_twelve = unrate[0:12]
-plt.plot(first_twelve['DATE'], first_twelve['VALUE'])
+plt.plot(first_twelve['DATE'], first_twelve['VALUE']) # line
 plt.show()
 ```
 ## 9: Fixing Axis Ticks
@@ -219,7 +219,7 @@ Use what we've discussed so far to rotate the x-axis tick labels by 90 degrees.
   - y-values should be the first 12 values in the `VALUE`column
 - Use `pyplot.xticks()` to rotate the x-axis tick labels by `90` degrees.
 - Display the plot.
-```
+```python
 plt.plot(first_twelve['DATE'], first_twelve['VALUE'])
 plt.xticks(rotation=90)
 plt.show()
@@ -246,7 +246,7 @@ Here's an overview of the pyplot functions we need to tweak the axis labels and 
 - Set the plot title to `"Monthly Unemployment Trends, 1948"`.
 - Display the plot.
 
-```
+```python
 plt.plot(first_twelve['DATE'], first_twelve['VALUE'])
 plt.xticks(rotation=90)
 plt.xlabel('Month')
@@ -359,7 +359,7 @@ ax2 = fig.add_subplot(2,1,2)
 
 This will create a grid, 2 rows by 1 column, of plots. Once we're done adding subplots to the figure, we display everything using `plt.show()`:
 
-```
+```python
 import matplotlib.pyplot as plt
 fig = plt.figure()
 ax1 = fig.add_subplot(2,1,1)
@@ -434,7 +434,7 @@ Create 2 line subplots in a 2 row by 1 column layout:
 
 Use `plt.show()` to display all the plots.
 
-```
+```python
 fig = plt.figure()
 ax1 = fig.add_subplot(2,1,1)
 ax2 = fig.add_subplot(2,1,2)
@@ -455,7 +455,7 @@ This is because matplotlib used the default dimensions for the total plotting ar
 
 This parameter takes in a tuple of floats:
 
-```
+```python
 fig = plt.figure(figsize=(width, height))
 ```
 
@@ -549,7 +549,7 @@ You can read about the different ways we can specify colors in matplotlib [here]
   - One line chart using data from 1949, with the line color set to `"blue"`.
 - Use `plt.show()` to display the plots.
 
-```
+```python
 unrate['MONTH'] = unrate['DATE'].dt.month
 fig = plt.figure(figsize=(6,3))
 
@@ -596,14 +596,14 @@ To help remind us which year each line corresponds to, we can add a **legend** t
 
 When we generate each line chart, we need to specify the text label we want each color linked to. The `pyplot.plot()`function contains a `label` parameter, which we use to set the year value:
 
-```
+```python
 plt.plot(unrate[0:12]['MONTH'], unrate[0:12]['VALUE'], c='red', label='1948')
 plt.plot(unrate[12:24]['MONTH'], unrate[12:24]['VALUE'], c='blue', label='1949')
 ```
 
 We can create the legend using [pyplot.legend](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.legend) and specify its location using the `loc` parameter:
 
-```
+```python
 plt.legend(loc='upper left')
 ```
 
