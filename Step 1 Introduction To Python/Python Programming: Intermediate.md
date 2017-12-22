@@ -1811,7 +1811,8 @@ We mentioned the [re](https://docs.python.org/3/library/re.html) module earlier,
 
 With `re.search(regex, string)`, we can check whether `string` is a match for `regex`. If it is, the expression will return a **match** object. If it isn't, it will return `None`. For now, we won't worry about returning the actual matches - we'll just compare the result to `None` to see whether we have a match or not.
 
-```
+```python
+import re
 if re.search("needle", "haystack") is not None:
     print("We found it!")
 else:
@@ -1969,7 +1970,7 @@ Let's use `re.sub()` to convert all **serious** tags to the format `"[Serious]"`
 
 - Replace `"[serious]"`, `"(Serious)"`, and `"(serious)"`with `"[Serious]"` for all of the titles in `posts`.You should only need to use one call to `sub()`, and one regex.Recall that the `repl` argument is an ordinary string. It's not a regex, so you don't need to escape characters like `"["`.Append each formatted row to `posts_new`.
 
-```
+```python
 import re
 posts_new = []
 for row in posts:
@@ -2068,10 +2069,13 @@ Here are some of the attributes:
 For example, we can retrieve the year value as an *integer* using the `tm_year`property:
 
 
-```
+```python
 current_time = time.time()
+# 1513952482.40725
 current_struct_time = time.gmtime(current_time)
+# time.struct_time(tm_year=2017, tm_mon=12, tm_mday=22, tm_hour=14, tm_min=21, tm_sec=1, tm_wday=4, tm_yday=356, tm_isdst=0)
 current_year = current_struct_time.tm_year
+# 2017
 ```
 
 ### Instructions
@@ -2114,12 +2118,14 @@ To get the current `datetime`, we use the [datetime.now()](https://docs.python.o
 - Assign the current year to `current_year`.
 - Assign the current month to `current_month`.
 
-```
+```python
 import datetime
 current_datetime = datetime.datetime.now()
-current_year = current_datetime.year
-current_month = current_datetime.month
+# datetime.datetime(2017, 12, 22, 9, 22, 49, 905054)
+current_year = current_datetime.year # 2017
+current_month = current_datetime.month # 12
 print(current_datetime)
+
 ```
 
 
@@ -2163,12 +2169,15 @@ If we wanted to, we could also subtract a `timedelta` instance from a `datetime`
 - Create an instance of the `timedelta` class that represents one day. Assign this to a new variable `diff`.
 - Assign the `datetime` instance for tomorrow to a new variable `tomorrow`, and the `datetime` instance for yesterday to a new variable `yesterday`.
 
-```
+```python
 import datetime
 today = datetime.datetime.now()
+# datetime.datetime(2017, 12, 22, 9, 23, 47, 453772)
 diff = datetime.timedelta(days = 1)
 tomorrow = today + diff
+# datetime.datetime(2017, 12, 23, 9, 23, 47, 453772)
 yesterday = today - diff
+# datetime.datetime(2017, 12, 21, 9, 23, 47, 453772)
 ```
 
 ## 5: Formatting Dates
@@ -2177,9 +2186,11 @@ Suppose we'd like to output dates in human-readable formats. If we use the `prin
 
 The `datetime.datetime.strftime()`method takes a format string as its input. A format string contains special indicators, usually preceded by percent characters (`"%"`), that indicate where certain values should go. For example, suppose we stored a timestamp from March 3, 2010 in the object `march3`. If we want to format it nicely into the string `"Mar 03, 2010"`, we can write the following code:
 
-```
+```python
 march3 = datetime.datetime(year = 2010, month = 3, day = 3)
+# datetime.datetime(2010, 3, 3, 0, 0)
 pretty_march3 = march3.strftime("%b %d, %Y")
+# 'Mar 03, 2010'
 print(pretty_march3)
 ```
 
@@ -2376,39 +2387,26 @@ In this project, we'll explore the dataset, and try to find patterns in the demo
 - Call [list()](https://docs.python.org/3/library/functions.html#func-list) on the result to get a list of all the data in the file.Assign the result to the variable `data`.
 - Display the first `5` rows of `data` to verify everything.
 
+```
+import csv
+f = open('guns.csv', 'r')
+csvreader = csv.reader(f)
+data = list(csvreader)
+data[:5]
+```
+
 ## 2: Removing Headers From A List Of Lists
 
 In the last screen, we read our data into the list of lists `data`. Each inner list in `data` represents a single row. Each item in the inner lists represents a single column for that row. Here's how the first `5` rows should have looked:
 
-```
-
-```
 
 ```
 [
-```
-
-```
     ['', 'year', 'month', 'intent', 'police', 'sex', 'age', 'race', 'hispanic', 'place', 'education'], 
-```
-
-```
     ['1', '2012', '01', 'Suicide', '0', 'M', '34', 'Asian/Pacific Islander', '100', 'Home', '4'], 
-```
-
-```
     ['2', '2012', '01', 'Suicide', '0', 'F', '21', 'White', '100', 'Street', '3'], 
-```
-
-```
     ['3', '2012', '01', 'Suicide', '0', 'M', '60', 'White', '100', 'Other specified', '4'], 
-```
-
-```
     ['4', '2012', '02', 'Suicide', '0', 'M', '64', 'White', '100', 'Home', '4']
-```
-
-```
 ]
 ```
 
@@ -2420,6 +2418,13 @@ You hopefully noticed that the first item in the `data` list is a header row. In
 - Remove the first row from `data`.
 - Display `headers`.
 - Display the first `5` rows of `data` to verify that you removed the header row properly.
+
+```
+headers = data[0]
+data = data[1:]
+print(headers)
+print(data[:5])
+```
 
 ## 3: Counting Gun Deaths By Year
 
@@ -2434,15 +2439,23 @@ We can perform this operation by creating a dictionary, then keeping count in th
 - Loop through each element in `years`.If the element isn't a key in `year_counts`, create it, and set the value to `1`.If the element is a key in `year_counts`, increment the value by one.
 - Display `year_counts` to see how many gun deaths occur in each year.
 
+```
+years = [row[1] for row in data]
+years_counts = {}
+for year in years:
+    if year in years_counts:
+        years_counts[year] += 1
+    else:
+        years_counts[year] = 1
+print(years_counts)
+```
+
 ## 4: Exploring Gun Deaths By Month And Year
 
 It looks like gun deaths didn't change much by year from `2012` to `2014`. Let's see if gun deaths in the US change by month and year. In order to do this, we'll have to create a [datetime.datetime](https://docs.python.org/3/library/datetime.html#datetime-objects) object using the `year` and `month` columns. We'll then be about to count up gun deaths by date, like we did by `year` in the last screen.
 
 As you may recall from an earlier mission, you can create a `datetime` object by specifying the `year`, `month`, and `day`keyword arguments:
 
-```
-
-```
 
 ```
 date = datetime(year=2016, month=12, day=1)
@@ -2491,43 +2504,19 @@ As you can see, the first row is a header row, and the second row consists of po
 
 Earlier, we computed the number of gun deaths per race, and created a dictionary, `race_counts`, that looked like this:
 
-```
-
-```
 
 ```
 {
-```
-
-```
      'Asian/Pacific Islander': 1326,
-```
-
-```
      'Black': 23296,
-```
-
-```
      'Hispanic': 9022,
-```
-
-```
      'Native American/Native Alaskan': 917,
-```
-
-```
      'White': 66237
-```
-
-```
 }
 ```
 
 In order to get from the raw counts of gun deaths by race to a rate of gun deaths per `100000` people in each race, we'll need to divide the total number of gun deaths by the population of each race. From the census dataset, we know that the number of people in the `White` racial category is `197318956`. We'd divide `66237` by `197318956`:
 
-```
-
-```
 
 ```
 white_gun_death_rate = 66237 / 197318956
@@ -2535,9 +2524,6 @@ white_gun_death_rate = 66237 / 197318956
 
 This gives us the percentage chance that a given person in the `White` census race category would have been killed by a gun in the US from `2012` to `2014`. If you do this computation, you'll see that the rate is a very small number, `0.0003356849303419181`. It's for this reason that it's typical to express crime statistics as the "rate per 100000". This tells you the number of people in a given group out of every `100000` that were killed by guns in the US. To get this, we just multiply by `100000`:
 
-```
-
-```
 
 ```
 rate_per_hundredk = 0.0003356849303419181 * 100000
