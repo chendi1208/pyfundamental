@@ -1326,41 +1326,11 @@ Let's explore the values in these columns by using sets and list comprehensions.
 
 ```
 teams = [row[1] for row in nfl_suspensions]
-```
-
-3
-
-```
 unique_teams = set(teams)
-```
-
-4
-
-```
 print(unique_teams)
-```
 
-5
-
-```
-
-```
-
-6
-
-```
 games = [row[2] for row in nfl_suspensions]
-```
-
-7
-
-```
 unique_games = set(games)
-```
-
-8
-
-```
 print(unique_games)
 ```
 
@@ -1375,41 +1345,11 @@ Next, let's create a `Suspension` class that we can use to represent each NFL su
 
 ```
 class Suspension():
-```
-
-3
-
-```
-    def __init__(self,row):
-```
-
-4
-
-```
+    def __init__(self, row):
         self.name = row[0]
-```
-
-5
-
-```
         self.team = row[1]
-```
-
-6
-
-```
-        self.games = row[2] 
-```
-
-7
-
-```
+        self.games = row[2]
         self.year = row[5]
-```
-
-8
-
-```
 third_suspension = Suspension(nfl_suspensions[2])
 ```
 
@@ -1426,113 +1366,18 @@ Let's tweak the `Suspension` class a bit to extend its functionality. Right now,
 
 ```
 class Suspension():
-```
-
-2
-
-```
-    def __init__(self,row):
-```
-
-3
-
-```
+    def __init__(self, row):
         self.name = row[0]
-```
-
-4
-
-```
         self.team = row[1]
-```
-
-5
-
-```
         self.games = row[2]
-```
-
-6
-
-```
-class Suspension():
-```
-
-7
-
-```
-    def __init__(self,row):
-```
-
-8
-
-```
-        self.name = row[0]
-```
-
-9
-
-```
-        self.team = row[1]
-```
-
-10
-
-```
-        self.games = row[2] 
-```
-
-11
-
-```
         try:
-```
-
-12
-
-```
             self.year = int(row[5])
-```
-
-13
-
-```
         except Exception:
-```
-
-14
-
-```
-             self.year = 0
-```
-
-15
-
-```
+            self.year = 0
     def get_year(self):
-```
-
-16
-
-```
         return(self.year)
-```
-
-17
-
-```
-                
-```
-
-18
-
-```
-missing_year = Suspension(nfl_suspensions[22])
-```
-
-19
-
-```
+        
+missing_year = Suspension(nfl_suspensions[2])
 twenty_third_year = missing_year.get_year()
 ```
 
@@ -1607,37 +1452,19 @@ On the next few screens, we'll delve into why this behavior occurs.
 
 When we write functions, we're writing reusable blocks of code. This means that no matter what's happening with the rest of the code we write, the function should operate in exactly the same way each time. This allows us to create programs that run in predictable ways. We wouldn't want a function to behave differently at random if we had a variable called `total` in our code. Let's say we wrote a function that adds two numbers:
 
-```
-
-```
 
 ```
 def add(a,b):
-```
-
-```
     total = a + b
-```
-
-```
     return total
 ```
 
 Inside the function, we're defining a variable named `total`. We could call the function like this:
 
-```
-
-```
 
 ```
 total = 15
-```
-
-```
 print(add(10, 20))
-```
-
-```
 print(total)
 ```
 
@@ -1658,41 +1485,11 @@ The *global* scope is whatever happens outside of a function. Anything that happ
 
 ```
 def find_average(column):
-```
-
-2
-
-```
     length = len(column)
-```
-
-3
-
-```
     total = sum(column)
-```
-
-4
-
-```
     return total / length
-```
 
-5
-
-```
-
-```
-
-6
-
-```
 total = sum(borrower_default_count_240)
-```
-
-7
-
-```
 average = find_average(principal_outstanding_240)
 ```
 
@@ -1702,47 +1499,17 @@ average = find_average(principal_outstanding_240)
 
 Here's an example:
 
-```
-
-```
 
 ```
 def add(a,b):
-```
-
-```
     total = a + b
-```
-
-```
     return total
-```
 
-```
-
-```
-
-```
 def subtract(a,b):
-```
-
-```
     total = a - b
-```
-
-```
     return total
-```
 
-```
-
-```
-
-```
 print(add(1,5))
-```
-
-```
 print(subtract(1,5))
 ```
 
@@ -1761,71 +1528,16 @@ GlobalscopeLocalscope(add)Localscope(subtract)total=6total=-4
 
 ```
 def find_average(column):
-```
-
-2
-
-```
     length = len(column)
-```
-
-3
-
-```
     total = sum(column)
-```
-
-4
-
-```
     return total / length
-```
 
-5
-
-```
-
-```
-
-6
-
-```
 def find_length(column):
-```
-
-7
-
-```
     length = len(column)
-```
-
-8
-
-```
     return length
-```
 
-9
-
-```
-
-```
-
-10
-
-```
 length = len(borrower_default_count_240)
-```
-
-11
-
-```
 average = find_average(principal_outstanding_240)
-```
-
-12
-
-```
 principal_length = find_length(principal_outstanding_240)
 ```
 
@@ -1837,17 +1549,8 @@ Here's an example:
 
 ```
 total = 50
-```
-
-```
 def find_average(column):
-```
-
-```
     length = len(column)
-```
-
-```
     return total / length
 ```
 
@@ -1864,41 +1567,11 @@ Globalscopetotal=50Localscope(find_average)length=1845total
 
 ```
 def find_average(column):
-```
-
-2
-
-```
     total = sum(column)
-```
-
-3
-
-```
     # In this function, we are going to pretend that we forgot to calculate the length
-```
-
-4
-
-```
     return total / length
-```
 
-5
-
-```
-
-```
-
-6
-
-```
 length = 10
-```
-
-7
-
-```
 average = find_average(principal_outstanding_240)
 ```
 
@@ -1910,17 +1583,8 @@ Here's an example of what won't work:
 
 ```
 a = 2
-```
-
-```
 def alter_a():
-```
-
-```
     a = a * 2
-```
-
-```
     return a
 ```
 
@@ -1938,9 +1602,6 @@ Here's an example of the type of code that would generate this behavior:
 
 ```
 def total(a):
-```
-
-```
     return sum(a)
 ```
 
@@ -1950,21 +1611,9 @@ If other code in the *global scope* overwrites the built-in function, then the i
 
 ```
 sum = 10
-```
 
-```
-
-```
-
-```
 def total(a):
-```
-
-```
     return sum(a)
-```
-
-```
 
 print(total([1,2]))
 ```
@@ -1981,33 +1630,12 @@ Still, let's take a look at how we would use them. We define global variables wi
 
 ```
 total = 10
-```
 
-```
-
-```
-
-```
 def add_to_total(a):
-```
-
-```
     global total
-```
-
-```
     total = total + a
-```
 
-```
-
-```
-
-```
 add_to_total(20)
-```
-
-```
 print(total)
 ```
 
@@ -2017,31 +1645,13 @@ When we create a *global variable*, we can't create it and assign a value to it 
 
 We can also define *global variables* inside *local scopes*:
 
-```
-
-```
 
 ```
 def test_function():
-```
-
-```
     global a
-```
-
-```
     a = 10
-```
 
-```
-
-```
-
-```
 test_function()
-```
-
-```
 print(a)
 ```
 
@@ -2057,41 +1667,11 @@ Because we defined `a` with the `global`keyword, this code will print out `10`.
 
 ```
 def new_function():
-```
-
-3
-
-```
     global b
-```
-
-4
-
-```
     b = 20
-```
-
-5
-
-```
     
-```
-
-6
-
-```
 new_function()
-```
 
-7
-
-```
-
-```
-
-8
-
-```
 print(b)
 ```
 
