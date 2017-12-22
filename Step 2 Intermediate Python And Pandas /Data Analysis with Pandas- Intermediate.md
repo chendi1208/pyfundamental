@@ -836,7 +836,7 @@ To find the total amount the average person in `Canada` drank in `1986`, for exa
 - Extract the fifth column of `canada_1986`, replace any empty strings (`''`) with the *string* `0`, and convert the column to the *float* data type. Assign the result to `canada_alcohol`.
 - Compute the sum of `canada_alcohol`. Assign the result to `total_canadian_drinking`.
 
-```python
+```
 is_canada_1986 = (world_alcohol[:,2] == "Canada") & (world_alcohol[:,0] == '1986')
 canada_1986 = world_alcohol[is_canada_1986,:]
 canada_alcohol = canada_1986[:,4]
@@ -985,10 +985,11 @@ You can read more about the parameters the `read_csv()` method takes to customiz
 - Use the `pandas.read_csv()` function to read the file `"food_info.csv"` into a dataframe named `food_info`.
 - Use the `type()` and `print()` functions to display the type of `food_info` to confirm that it's a dataframe object.
 
-```
+```python
 import pandas
 food_info = pandas.read_csv("food_info.csv")
 print(type(food_info))
+# <class 'pandas.core.frame.DataFrame'>
 ```
 
 ## 4: Exploring The DataFrame
@@ -1001,7 +1002,7 @@ first_rows = food_info.head()
 
 If you peek at the [documentation](http://pandas.pydata.org/pandas-docs/version/0.17.1/generated/pandas.DataFrame.head.html), you'll notice that you can pass in an integer (`n`) into the `head()` method to display the first `n` rows instead of the first 5:
 
-```
+```python
 # First 3 rows.
 print(food_info.head(3))
 ```
@@ -1010,8 +1011,18 @@ Because this dataframe contains many columns and rows, pandas uses ellipsis (`..
 
 To access the full list of column names, use the `columns` attribute:
 
-```
+```python
 column_names = food_info.columns
+#Index(['NDB_No', 'Shrt_Desc', 'Water_(g)', 'Energ_Kcal', 'Protein_(g)',
+#       'Lipid_Tot_(g)', 'Ash_(g)', 'Carbohydrt_(g)', 'Fiber_TD_(g)',
+#       'Sugar_Tot_(g)', 'Calcium_(mg)', 'Iron_(mg)', 'Magnesium_(mg)',
+#       'Phosphorus_(mg)', 'Potassium_(mg)', 'Sodium_(mg)', 'Zinc_(mg)',
+#       'Copper_(mg)', 'Manganese_(mg)', 'Selenium_(mcg)', 'Vit_C_(mg)',
+#       'Thiamin_(mg)', 'Riboflavin_(mg)', 'Niacin_(mg)', 'Vit_B6_(mg)',
+#       'Vit_B12_(mcg)', 'Vit_A_IU', 'Vit_A_RAE', 'Vit_E_(mg)', 'Vit_D_mcg',
+#       'Vit_D_IU', 'Vit_K_(mcg)', 'FA_Sat_(g)', 'FA_Mono_(g)', 'FA_Poly_(g)',
+#       'Cholestrl_(mg)'],
+#      dtype='object')
 ```
 
 Lastly, you can use the `shape` attribute to understand the dimensions of the dataframe. The `shape` attribute returns a tuple of integers representing the number of rows followed by the number of columns:
@@ -1078,7 +1089,7 @@ While we use bracket notation to access elements in a NumPy array or a standard 
 
 If you're interested in accessing a single row, pass in the row label to the `loc[]`method. Python will return an error if you don't pass in a valid row label:
 
-```
+```python
 # Series object representing the row at index 0.
 food_info.loc[0]
 
@@ -1117,7 +1128,7 @@ When reading a file into a dataframe, pandas analyzes the values and infers each
 
 If you're interested in accessing multiple rows of the dataframe, you can pass in either a slice of row labels or a list of row labels and pandas will return a dataframe. Note that unlike slicing lists in Python, a slice of a dataframe using `.loc[]` will include both the start and the end row:
 
-```
+```python
 # DataFrame containing the rows at index 3, 4, 5, and 6 returned.
 food_info.loc[3:6]
 
@@ -1149,7 +1160,7 @@ last_rows = food_info.loc[num_rows-5:num_rows]
 
 When accessing a column in a dataframe, pandas returns a Series object containing the row label and each row's value for that column. To access a single column, use bracket notation and pass in the column name as a string:
 
-```
+```python
 # Series object representing the "NDB_No" column.
 ndb_col = food_info["NDB_No"]
 
@@ -1178,7 +1189,7 @@ cholesterol = food_info["Cholestrl_(mg)"]
 
 To select multiple columns, pass in a list of strings representing the column names and pandas will return a dataframe containing only the values in those columns. The following code returns a dataframe containing the `"Zinc_(mg)"`and `"Copper_(mg)"` columns, in that order:
 
-```
+```python
 columns = ["Zinc_(mg)", "Copper_(mg)"]
 zinc_copper = food_info[columns]
 
@@ -1212,14 +1223,14 @@ To help solidify the concepts learned in this mission, complete the following ex
   - Pass `gram_columns` into bracket notation to select just those columns and assign the resulting dataframe to `gram_df`
   - Then use the dataframe method [`head()`](http://pandas.pydata.org/pandas-docs/version/0.17.1/generated/pandas.DataFrame.head.html) to display the first 3 rows of `gram_df`.
 
-```
+```python
 print(food_info.columns)
 print(food_info.head(2))
-col_names = food_info.columns.tolist()
+col_names = food_info.columns.tolist() # tolist()
 gram_columns = []
 
 for c in col_names:
-    if c.endswith("(g)"):
+    if c.endswith("(g)"): # endwith()
         gram_columns.append(c)
 gram_df = food_info[gram_columns]
 print(gram_df.head(3))
@@ -1260,7 +1271,6 @@ To practice what we learned in the previous mission:
 - Display the first three rows of `food_info`.
 
 ```
-
 import pandas
 food_info = pandas.read_csv("food_info.csv")
 col_names = food_info.columns.tolist()
@@ -1354,9 +1364,9 @@ The columns in the data set use different units (kilo-calories, milligrams, etc.
 
 While there are many ways to normalize data, one of the simplest ways is to divide all of the values in a column by that column's maximum value. This way, all of the columns will range from `0` to `1`. To calculate the maximum value of a column, we use the [`Series.max()`](http://pandas.pydata.org/pandas-docs/version/0.17.1/generated/pandas.Series.max.html) method. In the following code, we use the `Series.max()`method to calculate the largest value in the `"Energ_Kcal"` column, and assign it to `max_calories`:
 
-```
+```python
 # The largest value in the "Energ_Kcal" column.
-max_calories = food_info["Energ_Kcal"].max()
+max_calories = food_info["Energ_Kcal"].max() # max()
 ```
 
 We can then use the division operator (`/`) to divide the values in the `"Energ_Kcal"` column by the maximum value, `max_calories`:
@@ -1432,9 +1442,9 @@ food_info.sort_values("Sodium_(mg)")
 
 By default, pandas will sort the data by the column we specify in ascending order and return a new DataFrame, rather than modifying `food_info` itself. To customize the method's behavior, use the parameters listed in [the documentation](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort_values.html):
 
-```
+```python
 # Sorts the DataFrame in-place, rather than returning a new DataFrame.
-food_info.sort_values("Sodium_(mg)", inplace=True)
+food_info.sort_values("Sodium_(mg)", inplace=True) # sort_values
 
 # Sorts by descending order, rather than ascending.
 food_info.sort_values("Sodium_(mg)", inplace=True, ascending=False)
@@ -1487,7 +1497,6 @@ Because missing values can cause errors in numerical functions, we'll need to de
 Lets import the data set into pandas. You may notice at the start of the code, we import pandas differently from how we have previously.
 
 ```
-
 import pandas as pd
 ```
 
@@ -1515,9 +1524,9 @@ In general terms, both `NaN` and `None`can be called *null* values.
 
 If we want to see which values are `NaN`, we can use the [`pandas.isnull()`](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.isnull.html) function which takes a pandas series and returns a series of `True` and `False` values, the same way that NumPy did when we compared arrays.
 
-```
+```python
 sex = titanic_survival["sex"]
-sex_is_null = pandas.isnull(sex)
+sex_is_null = pandas.isnull(sex) # pd.isnull
 ```
 
 We can use this resultant series to select only the rows that have null values.
@@ -1619,7 +1628,7 @@ Pivot tables first group and then apply a calculation. In the previous screen, w
 
 Luckily, we can use the [Dataframe.pivot_table()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.pivot_table.html) method instead, which simplifies the kind of work we did on the last screen. To produce the same data, we could use one line.
 
-```
+```python
 passenger_class_fares = titanic_survival.pivot_table(index="pclass", values="fare", aggfunc=np.mean)
 ```
 
@@ -1665,7 +1674,7 @@ The `dropna()` method takes an `axis`parameter, which indicates whether you woul
 
 The code below will drop all rows in `titanic_survival` that have null values.
 
-```
+```python
 drop_na_rows = titanic_survival.dropna(axis=0)
 ```
 
@@ -1684,7 +1693,7 @@ new_titanic_survival = titanic_survival.dropna(axis=0,subset=["age", "sex"])
 
 ## 10: Using Iloc To Access Rows By Position
 
-In previous missions, we have used row labels to select data in pandas using `Dataframe.loc[]`. These work just like column labels, and can be values like numbers, characters, and strings.
+In previous missions, we have used **row labels** to select data in pandas using `Dataframe.loc[]`. These work just like column labels, and can be values like numbers, characters, and strings.
 
 Sometimes your dataset will have row labels that are not numbers, or that are not in order. We have sorted the `new_titanic_survival` dataframe by the `"age"` column from highest to lowest. Here is a preview of the a few of the columns for the first five rows of the data, or the five oldest passengers onboard.
 
@@ -1700,7 +1709,7 @@ You can see that the row labels for the first 5 rows are `14`, `61`, `1235`, `13
 
 The following code will select the first 5 rows as shown above:
 
-```
+```python
 first_five_rows = new_titanic_survival.iloc[0:5]
 ```
 
@@ -1720,7 +1729,7 @@ row_position_fifth = new_titanic_survival.iloc[4]
 
 ## 11: Using Column Indexes
 
-We can also index columns using both the `loc[]` and `iloc[]` methods. With `.loc[]`, we specify the column label strings as we have in the earlier exercises in this missions. With `iloc[]`, we simply use the integer number of the column, starting from the left-most column which is `0`. Similar to indexing with NumPy arrays, you separate the row and columns with a comma, and can use a colon to specify a range or as a wildcard.
+We can also index columns using both the `loc[]` and `iloc[]` methods. With `.loc[]`, we specify the **column label** strings as we have in the earlier exercises in this missions. With `iloc[]`, we simply use the **integer number** of the column, starting from the left-most column which is `0`. Similar to indexing with NumPy arrays, you separate the row and columns with a comma, and can use a colon to specify a range or as a wildcard.
 
 ```
 first_row_first_column = new_titanic_survival.iloc[0,0]
@@ -1759,19 +1768,18 @@ In this exercise, we don't want to retain the index. Check the documentation to 
 - Assign the final result to `titanic_reindexed`.
 - Print the first 5 rows and the first 3 columns of `titanic_reindexed`.
 
-```
-
+```python
 titanic_reindexed = new_titanic_survival.reset_index(drop=True)
 print(titanic_reindexed.iloc[0:5,0:3])
 ```
 
 ## 13: Apply Functions Over A DataFrame
 
-To perform a complex calculation across pandas objects, we'll need to learn about the [`DataFrame.apply()`](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html) method. By default, `DataFrame.apply()` will iterate through each column in a DataFrame, and perform on each function. When we create our function, we give it one parameter, `apply()` method passes each column to the parameter as a pandas series.
+To perform a complex calculation across pandas objects, we'll need to learn about the [`DataFrame.apply()`](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html) method. By default, `DataFrame.apply()` will iterate through each **column** in a DataFrame, and perform on each function. When we create our function, we give it one parameter, `apply()` method passes each column to the parameter as a pandas series.
 
 The result from the function will be combined with all of the other results, and placed into a new series. The function results will have the same position as the column or row we generated them from. Let's look at a simple example:
 
-```
+```python
 # This function returns the hundredth item from a series
 def hundredth_row(column):
     # Extract the hundredth item
@@ -1808,7 +1816,7 @@ By passing in the `axis=1` argument, we can use the `DataFrame.apply()` method t
 
 We can use this to calculate some summary information about the ages of the passengers on the Titanic. You will need to use an `if/elif/else` statement in your function. The `elif` statement just means *else if*. Below is an example of how these statements work.
 
-```
+```python
 def which_class(row):
     pclass = row['pclass']
     if pd.isnull(pclass):
@@ -1820,7 +1828,7 @@ def which_class(row):
     else:
         return "Third Class"
 
-classes = titanic_survivors.apply(which_class, axis=1)
+classes = titanic_survivors.apply(which_class, axis=1) # to row
 ```
 
 When the function is called, each test runs until one of the `if`, `elif` or `else`statements is met.
@@ -1866,7 +1874,6 @@ We have added an `"age_labels"` column to the dataframe containing the `age_labe
 - Assign the resulting Series object to `age_group_survival`.
 
 ```
-
 age_group_survival = titanic_survival.pivot_table(index="age_labels", values="survived")
 ```
 
@@ -2040,9 +2047,9 @@ Over the next two missions, we'll dive into some of pandas' internals to better 
 
 The three key data structures in pandas are:
 
-- Series objects (collections of values)
+- **Series** objects (collections of values)
 - DataFrames (collections of Series objects)
-- Panels (collections of DataFrame objects)
+- **Panels** (collections of DataFrame objects)
 
 We'll focus on the Series object in this mission.
 
@@ -2124,7 +2131,7 @@ series_custom[['Minions (2015)', 'Leviathan (2014)']]
 
 - Create a new Series object named `series_custom` that has a *string* index (based on the values from `film_names`), and contains all of the Rotten Tomatoes scores from `series_rt`.To create a new Series object:Import `Series` from pandas.Instantiate a new Series object, which takes in a `data` parameter and an `index` parameter. See the [documentation](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series) for help.Both of these parameters need to be lists.
 
-```
+```python
 # Import the Series object from pandas
 from pandas import Series
 
@@ -2186,8 +2193,7 @@ In both cases, pandas preserves the link between each element's index (film name
 - Sort `series_custom` by values, and assign the result to the variable `sc3`.
 - Finally, print the first 10 values in `sc2` and the first 10 values in `sc3`.
 
-```
-
+```python
 sc2 = series_custom.sort_index()
 sc3 = series_custom.sort_values()
 print(sc2[0:10])
@@ -2208,7 +2214,7 @@ series_custom/10
 
 This will return a new Series object where each value is 1/10 of the original value. We can even use NumPy functions to transform and run calculations over Series objects:
 
-```
+```python
 # Add each value with each other
 np.add(series_custom, series_custom)
 # Apply sine function to each value
@@ -2270,7 +2276,7 @@ Let's use this functionality to calculate the mean ratings from both critics and
 - `rt_critics` and `rt_users` are Series objects containing the average ratings from critics and users for each film.
 - Both Series objects use the same custom string index, which they base on the film names. Use the Python arithmetic operators to return a new Series object, `rt_mean`, that contains the mean ratings from both critics and users for each film.
 
-```
+```python
 rt_critics = Series(fandango['RottenTomatoes'].values, index=fandango['FILM'])
 rt_users = Series(fandango['RottenTomatoes_User'].values, index=fandango['FILM'])
 rt_mean = (rt_critics + rt_users)/2
@@ -2383,7 +2389,6 @@ When we select multiple rows, pandas returns a dataframe. When we select an indi
 - Select the following movies from `fandango_films` (in the order in which they appear), and assign them to `best_movies_ever`:"The Lazarus Effect (2015)""Gett: The Trial of Viviane Amsalem (2015)""Mr. Holmes (2015)"
 
 ```
-
 movies = ["The Lazarus Effect (2015)", "Gett: The Trial of Viviane Amsalem (2015)", "Mr. Holmes (2015)"]
 best_movies_ever = fandango_films.loc[movies]
 ```
@@ -2405,7 +2410,7 @@ Recall that the NumPy `std()` method returns a single computed value when we app
 
 If we use a NumPy function that returns a value for each element in a Series, we can transform all of the values in each column and return a dataframe with those new values instead. Here's an example:
 
-```
+```python
 float_df.apply(lambda x: x*2)
 ```
 
@@ -2426,7 +2431,7 @@ print(halved_df.head(1))
 
 So far we've used the default behavior of the `apply()` method, which operates over the columns in a Datframe. To apply a function over the rows in a dataframe (which pandas treats as Series objects), we need to set the `axis` parameter to `1`. Applying over the rows allows us to do things like calculate the standard deviation of multiple column values for each movie:
 
-```
+```python
 rt_mt_user = float_df[['RT_user_norm', 'Metacritic_user_nom']]
 rt_mt_user.apply(lambda x: np.std(x), axis=1)
 ```
@@ -2581,10 +2586,9 @@ In this project, we'll explore the data, and try to find interesting patterns. O
 ```
 import pandas as pd
 
-data = pd.read_csv("thanksgiving.csv", encoding="Latin-1")
+data = pd.read_csv("thanksgiving-2015-poll-data.csv", encoding="Latin-1")
 data.head()
 data.columns
-data["Do you celebrate Thanksgiving?"].value_counts()
 ```
 
 ## 2: Filtering Out Rows From A DataFrame
@@ -2596,7 +2600,7 @@ Because we want to understand what people ate for Thanksgiving, we'll remove any
 - Use the [pandas.Series.value_counts()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.value_counts.html) method to display counts of how many times each category occurs in the `Do you celebrate Thanksgiving?` column.
 - Filter out any rows in `data` where the response to `Do you celebrate Thanksgiving?` is not `Yes`. At the end, all of the values in the `Do you celebrate Thanksgiving?`column of `data` should be `Yes`.
 
-```
+```python
 data["Do you celebrate Thanksgiving?"].value_counts()
 data = data[data["Do you celebrate Thanksgiving?"] == "Yes"]
 ```
@@ -2679,7 +2683,7 @@ We can do this by splitting each value on the space character (``), then taking 
   - Is there anything that we should be aware of about the results or our methodology?
   - Is this a true depiction of the ages of survey participants?
 
-```
+```python
 data["Age"].value_counts()
 def extract_age(age_str):
     if pd.isnull(age_str):
