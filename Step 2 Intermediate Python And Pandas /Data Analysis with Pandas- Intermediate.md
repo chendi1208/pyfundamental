@@ -2047,9 +2047,9 @@ Over the next two missions, we'll dive into some of pandas' internals to better 
 
 The three key data structures in pandas are:
 
-- **Series** objects (collections of values)
+- Series objects (collections of values)
 - DataFrames (collections of Series objects)
-- **Panels** (collections of DataFrame objects)
+- Panels (collections of DataFrame objects)
 
 We'll focus on the Series object in this mission.
 
@@ -2131,7 +2131,7 @@ series_custom[['Minions (2015)', 'Leviathan (2014)']]
 
 - Create a new Series object named `series_custom` that has a *string* index (based on the values from `film_names`), and contains all of the Rotten Tomatoes scores from `series_rt`.To create a new Series object:Import `Series` from pandas.Instantiate a new Series object, which takes in a `data` parameter and an `index` parameter. See the [documentation](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series) for help.Both of these parameters need to be lists.
 
-```python
+```
 # Import the Series object from pandas
 from pandas import Series
 
@@ -2193,7 +2193,8 @@ In both cases, pandas preserves the link between each element's index (film name
 - Sort `series_custom` by values, and assign the result to the variable `sc3`.
 - Finally, print the first 10 values in `sc2` and the first 10 values in `sc3`.
 
-```python
+```
+
 sc2 = series_custom.sort_index()
 sc3 = series_custom.sort_values()
 print(sc2[0:10])
@@ -2214,7 +2215,7 @@ series_custom/10
 
 This will return a new Series object where each value is 1/10 of the original value. We can even use NumPy functions to transform and run calculations over Series objects:
 
-```python
+```
 # Add each value with each other
 np.add(series_custom, series_custom)
 # Apply sine function to each value
@@ -2276,7 +2277,7 @@ Let's use this functionality to calculate the mean ratings from both critics and
 - `rt_critics` and `rt_users` are Series objects containing the average ratings from critics and users for each film.
 - Both Series objects use the same custom string index, which they base on the film names. Use the Python arithmetic operators to return a new Series object, `rt_mean`, that contains the mean ratings from both critics and users for each film.
 
-```python
+```
 rt_critics = Series(fandango['RottenTomatoes'].values, index=fandango['FILM'])
 rt_users = Series(fandango['RottenTomatoes_User'].values, index=fandango['FILM'])
 rt_mean = (rt_critics + rt_users)/2
@@ -2389,6 +2390,7 @@ When we select multiple rows, pandas returns a dataframe. When we select an indi
 - Select the following movies from `fandango_films` (in the order in which they appear), and assign them to `best_movies_ever`:"The Lazarus Effect (2015)""Gett: The Trial of Viviane Amsalem (2015)""Mr. Holmes (2015)"
 
 ```
+
 movies = ["The Lazarus Effect (2015)", "Gett: The Trial of Viviane Amsalem (2015)", "Mr. Holmes (2015)"]
 best_movies_ever = fandango_films.loc[movies]
 ```
@@ -2410,7 +2412,7 @@ Recall that the NumPy `std()` method returns a single computed value when we app
 
 If we use a NumPy function that returns a value for each element in a Series, we can transform all of the values in each column and return a dataframe with those new values instead. Here's an example:
 
-```python
+```
 float_df.apply(lambda x: x*2)
 ```
 
@@ -2431,7 +2433,7 @@ print(halved_df.head(1))
 
 So far we've used the default behavior of the `apply()` method, which operates over the columns in a Datframe. To apply a function over the rows in a dataframe (which pandas treats as Series objects), we need to set the `axis` parameter to `1`. Applying over the rows allows us to do things like calculate the standard deviation of multiple column values for each movie:
 
-```python
+```
 rt_mt_user = float_df[['RT_user_norm', 'Metacritic_user_nom']]
 rt_mt_user.apply(lambda x: np.std(x), axis=1)
 ```
@@ -2586,9 +2588,10 @@ In this project, we'll explore the data, and try to find interesting patterns. O
 ```
 import pandas as pd
 
-data = pd.read_csv("thanksgiving-2015-poll-data.csv", encoding="Latin-1")
+data = pd.read_csv("thanksgiving.csv", encoding="Latin-1")
 data.head()
 data.columns
+data["Do you celebrate Thanksgiving?"].value_counts()
 ```
 
 ## 2: Filtering Out Rows From A DataFrame
@@ -2600,7 +2603,7 @@ Because we want to understand what people ate for Thanksgiving, we'll remove any
 - Use the [pandas.Series.value_counts()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.value_counts.html) method to display counts of how many times each category occurs in the `Do you celebrate Thanksgiving?` column.
 - Filter out any rows in `data` where the response to `Do you celebrate Thanksgiving?` is not `Yes`. At the end, all of the values in the `Do you celebrate Thanksgiving?`column of `data` should be `Yes`.
 
-```python
+```
 data["Do you celebrate Thanksgiving?"].value_counts()
 data = data[data["Do you celebrate Thanksgiving?"] == "Yes"]
 ```
@@ -2683,7 +2686,7 @@ We can do this by splitting each value on the space character (``), then taking 
   - Is there anything that we should be aware of about the results or our methodology?
   - Is this a true depiction of the ages of survey participants?
 
-```python
+```
 data["Age"].value_counts()
 def extract_age(age_str):
     if pd.isnull(age_str):

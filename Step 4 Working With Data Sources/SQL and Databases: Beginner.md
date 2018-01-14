@@ -32,8 +32,6 @@ These were useful for expressing our filtering criteria, or condition, in the `W
 
 The following psuedo-code will help you conceptualize how we use the `AND`statement with a `WHERE` statement:
 
-
-
 ```
 SELECT [column1, column2,...] FROM [table1]
 
@@ -43,8 +41,6 @@ WHERE [condition1] AND [condition2]
 Now we can write a SQL query that returns all of the female-majority majors with more than `10000` employed graduates.
 
 Let's see what this query looks like:
-
-
 
 ```
 SELECT Major,ShareWomen,Employed FROM recent_grads 
@@ -390,6 +386,22 @@ limit 20;
 
 In the next mission, we'll walk through how to query a SQLite database from Python. Most companies use a SQL database of some kind to store their data. Learning how to interface with SQL databases from Python will allow you to incorporate more sources into your data science workflow.
 
+```
+Querying SQLite from Python
+	|
+    |---- 3: Connecting To The Database
+    |		|---- conn = sqlite3.connect('....db')
+    |---- 6: Creating A Cursor And Running A Query
+    |		|---- cursor = conn.cursor()
+    |		|---- cursor.execute(query)
+	|		|---- print(cursor.fetchall())
+    |---- 6: Adding Query Parameters: by dic/ url
+    |---- 8: Fetching A Specific Number Of Results
+    |		|---- cursor.fetchone()
+    |		|---- cursor.fetchmany(n)
+    |----9: Closing The Database Connection
+    |		|---- conn.close()
+```
 # Querying SQLite from Python
 
 ## 1: Overview
@@ -442,10 +454,8 @@ Python 2.5 and up come with the SQLite module, which means we don't need to inst
 
 We can import it into our environment using this command:
 
-
-
 ```
-import SQLite3
+import sqlite3
 ```
 
 Once we've imported the module, we connect to the database we want to query using the [`connect()` function](https://docs.python.org/3/library/sqlite3.html#sqlite3.connect). This function requires a single parameter, which is the database we want to connect to. Because the database we're working with exists as a file on disk, we need to pass in the file name.
@@ -458,7 +468,6 @@ The `connect()` function returns a [Connection instance](https://docs.python.org
 - Then, use the SQLite3 `connect()` function to connect to `jobs.db`, and assign the Connection instance it returns to `conn`.
 
 ```
-
 import sqlite3
 conn = sqlite3.connect("jobs.db")
 ```
@@ -480,21 +489,15 @@ A [*tuple*](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-se
 
 To create an empty *tuple*, assign a pair of empty parentheses to a variable:
 
-
-
 ```
 t = ()
 ```
 
 Python indexes *Tuples* from `0` to `n-1`, just like it does with *lists*. We access the values in a tuple using bracket notation.
 
-
-
 ```
 t = ('Apple', 'Banana')
-
 apple = t[0] 
-
 banana = t[1]
 ```
 
@@ -505,8 +508,6 @@ Next, let's dive into how to use the Cursor instance to query the database.
 ## 6: Creating A Cursor And Running A Query
 
 We need to use the Connection instance method [`cursor()`](https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.cursor) to return a Cursor instance corresponding to the database we want to query.
-
-
 
 ```
 cursor = conn.cursor()
@@ -521,21 +522,14 @@ In the following code block, we:
 
 
 
-```
+```python
 # SQL Query as a string
-
 query = "select * from recent_grads;"
-
 # Execute the query, convert the results to tuples, and store as a local variable
-
 cursor.execute(query)
-
 # Fetch the full results set as a list of tuples
-
 results = cursor.fetchall()
-
 # Display the first three results
-
 print(results[0:3])
 ```
 
@@ -565,13 +559,9 @@ print(majors[0:3])
 
 So far, we've been running queries by creating a Cursor instance, and then calling the `execute` method on the instance. The SQLite library actually allows us to skip creating a Cursor altogether by using the [`execute`method](https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.execute) within the Connection object itself. SQLite will create a Cursor instance for us under the hood and our query run against the database, but this shortcut allows us to skip a step. Here's what the code looks like:
 
-
-
 ```
 conn = sqlite3.connect("jobs.db")
-
 query = "select * from recent_grads;"
-
 conn.execute(query).fetchall()
 ```
 
@@ -587,13 +577,9 @@ Each Cursor instance contains an internal counter that updates every time we ret
 
 The `fetchmany()` method takes in an integer (`n`) and returns the corresponding results, starting from the current position. It then increments the Cursor instance's counter by `n`. In the following code, we return the first two results using the `fetchone()` method, then the next five results using the `fetchmany()` method.
 
-
-
 ```
 first_result = cursor.fetchone()
-
 second_result = cursor.fetchone()
-
 next_five_results = cursor.fetchmany(5)
 ```
 
@@ -616,8 +602,6 @@ five_results = cursor.fetchmany(5)
 Because SQLite restricts access to the database file when we're connected to a database, we need to close the connection when we're done working with it. Closing the connection allows other processes to access the database, which is important when you're in a production environment and working with other team members. Also, if we made any changes to the database, SQLite will automatically save them during this step.
 
 To close a connection to a database, use the Connection instance method [`close()`](https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.close). When we're working with multiple databases and multiple Connection instances, we want to make sure we call the `close()` method on the correct instance. After closing the connection, attempting to query the database using any linked Cursor instances will return the following error:
-
-
 
 ```
 ProgrammingError: Cannot operate on a closed database.
@@ -644,7 +628,6 @@ Now let's practice the entire workflow we've learned so far, from start to finis
 - Finally, close the connection to the database.
 
 ```
-
 conn = sqlite3.connect("jobs2.db")
 query = "select Major from recent_grads order by Major desc;"
 reverse_alphabetical = conn.cursor().execute(query).fetchall()
@@ -667,10 +650,6 @@ In this project, we'll continue working with the [CIA World Factbook](https://ww
 
 You can download the Factbook as a SQLite database [from GitHub](https://github.com/factbook/factbook.sql) if you want to work with it on your own computer. In this guided project, we'll be working with Python and the SQLite command line tool (SQLite Command Shell) to connect to the database, extract data, and perform analysis on the data.
 
-### Instructions
-
-For now, just hit "Next" to get started with the project!
-
 ## 2: Overview Of The SQLite Command Shell
 
 SQLite is a relational database management system that enables us to create databases and query them using SQL syntax. SQLite is simpler than full database systems like MySQL and PostgreSQL. It's good for cases where ease of use is more important than performance. Each SQLite database is stored as a single file, making it easy to transport.
@@ -678,8 +657,6 @@ SQLite is a relational database management system that enables us to create data
 The Factbook database is in the file `factbook.db`. The`db` at the end is a file extension that's short for *database*.
 
 We can open the Factbook database in the SQLite Command Shell by navigating to the same folder as `factbook.db`, then typing `sqlite3 factbook.db` on the command line. This enables us to manage the database and run SQL queries.
-
-Try it out for yourself!
 
 ### Instructions
 
@@ -699,13 +676,21 @@ Use the SQLite Command Shell to explore `factbook.db`.
 
 When you're done with the SQLite Command Shell, type `.quit`. Don't quit the shell just yet, though, because you'll be using it in the next step.
 
+```sql lite
+cd ...
+sqlite3 factbook.db
+.help
+.tables
+# facts
+.header on
+;
+```
+
 ## 3: Running Queries In The SQLite Command Shell
 
 The SQLite Command Shell also allows us to run any valid SQL query. For example, we could run the following:
 
-
-
-```
+```sql lite
 SELECT * FROM facts;
 ```
 
@@ -720,9 +705,27 @@ While you should think of your own queries, here are a couple of examples:
 - SELECT * FROM facts ORDER BY population DESC LIMIT 10;
 - SELECT * FROM facts ORDER BY area_land ASC LIMIT 10;
 
+```sql lite
+SELECT * FROM facts 
+ORDER BY population DESC 
+LIMIT 10;
+
+SELECT * FROM facts 
+ORDER BY area_land ASC 
+LIMIT 10;
+```
+
 You may notice that these queries return some strange results, such as `Ethiopia` having the least land area. The queries also include non-national entities like the `European Union` and `Akrotiri`.
 
 The data is fairly messy, and some values in the `area_land`column are missing. Add `WHERE area_land != ""` to the query before the `ORDER BY` clause to remove the invalid rows. You may also need to try additional filtering.
+
+```sql lite
+SELECT * FROM facts 
+WHERE area_land != ""
+ORDER BY area_land ASC 
+LIMIT 10;
+.quit
+```
 
 When you're done exploring, you can quit the SQLite Command Shell with `.quit`.
 
@@ -732,21 +735,12 @@ The `sqlite3` [library](https://docs.python.org/3/library/sqlite3.html), which c
 
 For example, this code will let us connect to `factbook.db` and select all of the rows:
 
-
-
-```
+```python
 import sqlite3
 
 conn = sqlite3.connect('factbook.db')
-
-
-
 c = conn.cursor()
-
 c.execute('SELECT * FROM facts;')
-
-
-
 print(c.fetchall())
 ```
 
@@ -756,6 +750,15 @@ The code above creates a [Connection](https://docs.python.org/3/library/sqlite3.
 
 - Write code in `query.py` that selects the `10` least populated countries from the `facts` table, and then prints the results.
 - Execute `query.py` from the command line by running `python query.py`.
+
+```python
+import sqlite3
+
+conn = sqlite3.connect('factbook.db')
+c = conn.cursor()
+c.execute('SELECT * FROM facts ORDER BY population ASC LIMIT 10')
+print(c.fetchall())
+```
 
 ## 5: Computing Population Projections
 
@@ -783,19 +786,27 @@ Read the `facts` table into pandas, and then compute the projected population fo
 
   N is the final population, N0 is the initial population, e is a constant value we can access with `math.e`, r is the rate of annual change, expressed as a decimal (so `1.5` percent should be `.015`), and t is the number of years we want to project out. Assume that you'll be starting in January `2015`and ending in January `2050`, covering a period of `35` years.* For example, let's say you have a country with 5000 people and a 4 percent annual growth rate. The formula would be N=5000∗e(.04∗35). *Use the `apply` method on pandas dataframes to compute what the population will be in `2050`for each row in the data. *Use the dataframe sort_values method to sort on the 2050 population in descending order. *Print the `10` countries that will have the highest populations in `2050`.
 
+```python
+facts_data = pd.read_sql_query('SELECT * FROM facts;', conn)
+facts_data = facts_data.dropna(axis=0)
+
+def final_population(row):
+  final = row['population'] * np.exp(row['population_growth'] / 100 * 35)
+  return final
+
+facts_data['final_population'] = facts_data.apply(final_population, axis = 1)
+facts_data['final_population'].nlargest(5)
+```
+
 ## 6: Summing Columns To Compute Total Area
 
 We can add up all of the values in a column by using the `SUM` function in a SQL query. For example, we can calculate the total `population` with this query:
-
-
 
 ```
 SELECT SUM(population) from facts;
 ```
 
 We can also add a `WHERE` clause, like this:
-
-
 
 ```
 SELECT SUM(population) from facts WHERE area_land != "";
@@ -809,6 +820,13 @@ Use SQL and Python to compute the ratio of land area to water area that each cou
 - Query to get the total of the `area_land` column.
 - Query to get the total of the `area_water` column`.
 - Divide `area_land` by `area_water` and print the result.
+
+```python
+query = 'SELECT SUM(area_land), SUM(area_water) FROM facts WHERE area_water != ""'
+result = c.execute(query).fetchone()
+result[0] / result[1]
+# 27.1658619703567
+```
 
 ## 7: Next Steps
 
@@ -864,7 +882,6 @@ Here are the first few rows of `facts`:
 - Count the number of items in `facts`, and assign the result to `facts_count`.
 
 ```
-
 import sqlite3
 
 conn = sqlite3.connect("factbook.db")
@@ -877,27 +894,19 @@ facts_count = len(facts)
 
 Counting the number of records in a table is a common operation, and it feels like it should be more efficient than the code we just wrote on the last screen. Thankfully, SQL has a `COUNT` aggregation function that allows us to count the number of records in a table. We call it an aggregation function because it works across many rows to calculate an aggregate value. Here's an example:
 
-
-
 ```
 SELECT COUNT(*) FROM facts;
 ```
 
 The query above will count the number of rows in the `facts` table of `factbook.db`. If we want to count the number of non-null values in a single column instead, we can use the following syntax:
 
-
-
 ```
-SELECT COUNT(area_water) 
-
-FROM facts;
+SELECT COUNT(area_water) FROM facts;
 ```
 
 Note that this query will only count the total number of non-null values in the `area_water` column. That means it can return a different total than `COUNT(*)`.
 
 Each of the queries above will return a list with a single tuple when we execute it in Python. The result will look like this:
-
-
 
 ```
 [(243,)]
@@ -924,17 +933,11 @@ print(birth_rate_count)
 
 SQL has other aggregation functions, in addition to `COUNT`. `MIN` and `MAX`, for example, find the minimum and maximum values in a column. While we can use the `COUNT` function with any column, `MIN` and `MAX` only work with numeric columns. Here's an example of how we can use these functions:
 
-
-
 ```
-SELECT MAX(birth_rate) 
-
-FROM facts;
+SELECT MAX(birth_rate) FROM facts;
 ```
 
 Just like the `COUNT` function, `MIN` and `MAX` will return a list with a single tuple. In this case, the result is:
-
-
 
 ```
 [(45.45,)]
@@ -962,17 +965,11 @@ print(max_death_rate)
 
 The final two aggregation functions we'll look at are `SUM` and `AVG`. `SUM` finds the total of all of the values in a numeric column:
 
-
-
 ```
-SELECT SUM(birth_rate) 
-
-FROM facts;
+SELECT SUM(birth_rate) FROM facts;
 ```
 
 This function also returns a list with a single tuple. Our query will return this list:
-
-
 
 ```
 [(4406.909999999998,)]
@@ -980,16 +977,11 @@ This function also returns a list with a single tuple. Our query will return thi
 
 `AVG` finds the mean of all of the non-null values in a column:
 
-
-
 ```
-SELECT AVG(birth_rate) 
-
-FROM facts;
+SELECT AVG(birth_rate) FROM facts;
 ```
 
 The result of this query is:
-
 
 
 ```
@@ -1016,28 +1008,17 @@ print(avg_water_area)
 
 If we wanted to use the `SUM`, `AVG`, and `MAX` functions on a column, writing three different queries would be inefficient. Recall that we can query multiple columns by separating their names with commas, like this:
 
-
-
 ```
-SELECT birth_rate, death_rate, population_growth 
-
-FROM facts;
+SELECT birth_rate, death_rate, population_growth FROM facts;
 ```
 
 We can apply the sample principle to combine multiple aggregation functions into a single query:
 
-
-
 ```
-SELECT COUNT(*), SUM(death_rate), AVG(population_growth) 
-
-FROM facts;
+SELECT COUNT(*), SUM(death_rate), AVG(population_growth) FROM facts;
 ```
 
 Because we've specified three aggregation functions in the query, it will return a list containing a tuple with three elements:
-
-
-
 ```
 [(261, 1783.2500000000002, 1.2009745762711865)]
 ```
@@ -1060,25 +1041,17 @@ print(facts_stats)
 
 As you may recall from an earlier mission, we can use the `WHERE` statement to limit our query to certain rows in a SQL table:
 
-
-
 ```
 SELECT population 
-
 FROM facts 
-
 WHERE birth_rate > 10;
 ```
 
 The query above will select any values in the `population` column where the `birth_rate` is higher than `10`. We can also use `WHERE` statements with aggregation functions to calculate statistics for a subset of rows:
 
-
-
 ```
 SELECT COUNT(*) 
-
 FROM facts 
-
 WHERE population > 5000000;
 ```
 
@@ -1106,11 +1079,8 @@ There are times when we only want to select the unique values in a column or dat
 
 To get a list of all of the countries in the world, we'll need to remove these duplicate rows so that there aren't duplicate entries. We can do this with the `DISTINCT` statement:
 
-
-
-```
+```sql lite
 SELECT DISTINCT name 
-
 FROM facts;
 ```
 
@@ -1118,11 +1088,8 @@ This query will return all of the unique values in the `name` column of `facts`.
 
 We can also use the `DISTINCT` statement with multiple columns to return unique pairings of those columns:
 
-
-
 ```
 SELECT DISTINCT name, population 
-
 FROM facts;
 ```
 
@@ -1143,21 +1110,15 @@ print(unique_birth_rates)
 
 If we wanted to count the number of unique items in the `population` column, we could use the `COUNT` aggregation function along with the `DISTINCT`statement. Here's how it would work:
 
-
-
 ```
 SELECT COUNT(DISTINCT population) 
-
 FROM facts;
 ```
 
 The query above will count all of the distinct values in the `population` column. We can also use other aggregation functions along with the `DISTINCT`statement:
 
-
-
 ```
 SELECT AVG(DISTINCT birth_rate) 
-
 FROM facts;
 ```
 
@@ -1183,21 +1144,15 @@ print(sum_population)
 
 Sometimes we'll want to perform some arithmetic on the columns in a SQL table. We might want to make the counts in the `population` column easier to understand by expressing them in terms of millions, for example. Instead of a number like `9766442`, we'd want to display `9.766442`. We could do this in Python, but it would be cumbersome to pull all of the data into the Python environment and then manipulate it. Fortunately, we can perform the math inside the SQL database engine instead. Here's an example:
 
-
-
 ```
 SELECT population / 1000000 
-
 FROM facts;
 ```
 
 The query above will divide each value in the `population` column by `1000000`, and return the result. Because the `population`column contains integers and we're dividing by an integer, the results will be integers as well. If we want to retain precision, we can specify a float instead:
 
-
-
 ```
 SELECT population / 1000000.0 
-
 FROM facts;
 ```
 
@@ -1221,21 +1176,15 @@ print(population_growth_millions)
 
 A few screens ago, we learned how to apply aggregation functions to columns in the `SELECT` statement, like so:
 
-
-
 ```
 SELECT AVG(birth_rate), SUM(population)
-
 FROM facts;
 ```
 
 The aggregation functions modified the columns' values before SQLite returned them. SQL lets us perform many different kinds of manipulations on the columns we select. To calculate the ratio between births and deaths for each country, for example, we could divide the `birth_rate`column by the `death_rate` column. Here's how we would accomplish this:
 
-
-
 ```
 SELECT birth_rate / death_rate 
-
 FROM facts;
 ```
 
@@ -1243,11 +1192,8 @@ The query above will divide each value in the `birth_rate` column by the corresp
 
 We can also perform more complex queries, such as finding the ratio of `birth_rate` plus `migration_rate` to `death_rate`. The results will help us discover whether the population is increasing or decreasing:
 
-
-
 ```
 SELECT (birth_rate + migration_rate) / death_rate 
-
 FROM facts;
 ```
 
@@ -1321,13 +1267,9 @@ SELECT * FROM recent_grads LIMIT 5;
 
 The `GROUP BY` SQL statement allows us to compute summary statistics by "group," or unique value. When we use this statement, SQL creates a group for each unique value in a column or set of columns (the same values we get when we use the `DISTINCT` statement), and then does the calculations for them. To illustrate, we can find the total number of people employed in each major category with the following query:
 
-
-
 ```
 SELECT SUM(Employed) 
-
 FROM recent_grads 
-
 GROUP BY Major_category;
 ```
 
@@ -1341,13 +1283,9 @@ This will give us the total number of employed graduates for each major category
 
 The output shows aggregate counts of the `Employed` column for each `Major_category`. Unfortunately, it doesn't indicate which major category each row refers to. We can fix this by including the `Major_category`column in our query:
 
-
-
 ```
 SELECT Major_category, SUM(Employed) 
-
 FROM recent_grads 
-
 GROUP BY Major_category;
 ```
 
@@ -1384,7 +1322,6 @@ The query in the diagram will give us the following result:
 - Use the `GROUP BY` statement to group the query by the `Major_category` column.
 
 ```
-
 SELECT Major_category, AVG(ShareWomen) FROM recent_grads GROUP BY Major_category;
 ```
 
@@ -1392,11 +1329,8 @@ SELECT Major_category, AVG(ShareWomen) FROM recent_grads GROUP BY Major_category
 
 You may have noticed that on the last screen, specifying `AVG(ShareWomen)`caused the column to have that name in the results. This can lead to confusion, and make it difficult to work with the results of SQL queries. To avoid this issue, we can select and rename columns at the same time with the `AS` statement. Here's an example:
 
-
-
 ```
 SELECT AVG(ShareWomen) AS average_female_share 
-
 FROM recent_grads;
 ```
 
@@ -1411,7 +1345,6 @@ This query will result in the following output:
 - Write a query that selects the following items, in order, and renames them with `AS`:`SUM(Men)` as `total_men`.`SUM(Women)` as `total_women`.
 
 ```
-
 SELECT SUM(Men) AS total_men, SUM(Women) AS total_women FROM recent_grads;
 ```
 
@@ -1426,7 +1359,6 @@ Now that we have a better understanding of the `GROUP BY` statement, let's pract
   - Use the `GROUP BY` statement to group the query by the `Major_category` column.
 
 ```
-
 SELECT Major_category, AVG(Employed) / AVG(Total) AS share_employed FROM recent_grads GROUP BY Major_category;
 ```
 
@@ -1436,15 +1368,10 @@ Sometimes we want to select a subset of rows after performing a `GROUP BY` query
 
 When we want to filter on a column generated by a query, we can use the `HAVING` statement. Here's an example:
 
-
-
 ```
 SELECT Major_category, AVG(Employed) / AVG(Total) AS share_employed 
-
 FROM recent_grads 
-
 GROUP BY Major_category 
-
 HAVING share_employed > .8;
 ```
 
@@ -1464,7 +1391,6 @@ Note that the results only include categories where `share_employed` is greater 
 - Find all of the major categories where the share of graduates with low-wage jobs is greater than `.1`.Use the `SELECT` statement to select the following columns and aggregates in a query:`Major_category``AVG(Low_wage_jobs) / AVG(Total)` as `share_low_wage`Use the `GROUP BY` statement to group the query by the `Major_category` column.Use the `HAVING` statement to restrict the selection to rows where `share_low_wage` is greater than `.1`.
 
 ```
-
 SELECT Major_category, AVG(Low_wage_jobs) / AVG(Total) AS share_low_wage FROM recent_grads GROUP BY Major_category HAVING share_low_wage > .1;
 ```
 
@@ -1472,11 +1398,8 @@ SELECT Major_category, AVG(Low_wage_jobs) / AVG(Total) AS share_low_wage FROM re
 
 On the last screen, the percentages in our results were very long and hard to read (e.g., `0.16833085991095678`). We can use the SQL `ROUND` function in our query to round them. Here's an example of what this looks like:
 
-
-
 ```
 SELECT Major_category, ROUND(ShareWomen, 2) AS rounded_share_women 
-
 FROM recent_grads;
 ```
 
@@ -1495,7 +1418,6 @@ By passing different values in to the `ROUND` function, such as `ROUND(ShareWome
 - Limit the results to `10` rows.
 
 ```
-
 SELECT ROUND(ShareWomen, 4), Major_category FROM recent_grads LIMIT 10;
 ```
 
@@ -1503,29 +1425,19 @@ SELECT ROUND(ShareWomen, 4), Major_category FROM recent_grads LIMIT 10;
 
 On a previous screen, we ran the following query:
 
-
-
 ```
 SELECT Major_category, AVG(Employed) / AVG(Total) AS share_employed 
-
 FROM recent_grads 
-
 GROUP BY Major_category 
-
 HAVING share_employed > .8;
 ```
 
 This query returned very long fractional values for `share_employed`. We can update our query with the `ROUND` function to round the results to three decimal places:
 
-
-
 ```
 SELECT Major_category, ROUND(AVG(Employed) / AVG(Total), 3) AS share_employed 
-
 FROM recent_grads 
-
 GROUP BY Major_category 
-
 HAVING share_employed > .8;
 ```
 
@@ -1543,7 +1455,6 @@ This will return the following result:
 - Only select rows where `share_degree_jobs` is less than `.3`.
 
 ```
-
 SELECT Major_category, ROUND(AVG(College_jobs) / AVG(Total), 3) AS share_degree_jobs FROM recent_grads GROUP BY Major_category HAVING share_degree_jobs < .3;
 ```
 
@@ -1613,15 +1524,6 @@ Calculate the minimum and maximum values for the columns from the previous scree
 You can observe these values using `print` statements, or the variables display below the output box.
 
 ```
-conn = sqlite3.connect("factbook.db")
-
-averages = "select avg(population), avg(population_growth), avg(birth_rate), avg(death_rate), avg(migration_rate) from facts;"
-avg_results = conn.execute(averages).fetchall()
-pop_avg = avg_results[0][0]
-pop_growth_avg = avg_results[0][1]
-birth_rate_avg = avg_results[0][2]
-death_rate_avg = avg_results[0][3]
-mig_rate_avg = avg_results[0][4]
 minimums = "select min(population), min(population_growth), min(birth_rate), min(death_rate) from facts;"
 maximums = "select max(population), max(population_growth), max(birth_rate), max(death_rate) from facts;"
 min_results = conn.execute(minimums).fetchall()
@@ -1691,8 +1593,6 @@ death_rate_max = results[0][7]
 
 These measures seem to align more with reality. Now let's predict next year's population for each country using the following formula:
 
-
-
 ```
 projected_population = population + (population * (population_growth/100))
 ```
@@ -1718,7 +1618,6 @@ and population is not null and population_growth is not null;
 '''
 
 projected_population = conn.execute(projected_population_query).fetchall()
-
 print(projected_population[0:10])
 ```
 

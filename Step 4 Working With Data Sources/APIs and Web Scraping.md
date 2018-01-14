@@ -1,3 +1,13 @@
+```
+Working with APIs
+    |
+    |---- 3: Types Of Requests
+    |        |---- requests.requests.get
+    |---- 4: Understanding Status Codes: 200, 301, 400, 401, 403, 404
+    |---- 6: Adding Query Parameters: by dic/ url
+    |
+    |---- data/
+```
 # Working with APIs
 
 ## 1: What's An API?
@@ -6,13 +16,13 @@ We've worked with data sets pretty extensively so far. While they're popular res
 
 Here are a few situations where data sets don't work well:
 
-- The data change frequently. It doesn't really make sense to regenerate a data set of stock prices, for example, and download it every minute. This approach would require a lot of bandwidth, and be very slow.
-- You only want a small piece of a much larger data set. [Reddit](https://www.reddit.com/) comments are one example. What if you want to pull just your own comments from reddit? It doesn't make much sense to download the entire reddit database, then filter it for a few items.
-- It involves repeated computation. For example, Spotify has an API that can tell you the genre of a piece of music. You could theoretically create your own classifier and use it to categorize music, but you'll never have as much data as Spotify does.
+- The data change frequently 频繁变化. It doesn't really make sense to regenerate a data set of stock prices, for example, and download it every minute. This approach would require a lot of bandwidth, and be very slow.
+- You only want a small piece of a much larger data set 只需大数据中的小部分. [Reddit](https://www.reddit.com/) comments are one example. What if you want to pull just your own comments from reddit? It doesn't make much sense to download the entire reddit database, then filter it for a few items.
+- It involves repeated computation 重复计算. For example, Spotify has an API that can tell you the genre of a piece of music. You could theoretically create your own classifier and use it to categorize music, but you'll never have as much data as Spotify does.
 
-In cases like these, an **application program interface (API)** is the right solution. An API is a set of methods and tools that allows different applications to interact with each other. Programmers use APIs to query and retrieve data dynamically (which they can then integrate with their own apps). A client can retrieve information quickly and effectively through an API.
+In cases like these, an application program interface (API) is the right solution. **An API is a set of methods and tools that allows different applications to interact with each other.** Programmers use APIs to query and retrieve data dynamically (which they can then integrate with their own apps). A client can retrieve information quickly and effectively through an API.
 
-Reddit, Spotify, Twitter, Facebook, and many other companies provide free APIs that enable developers to access the information they store on their servers; others charge for access to their APIs.
+Reddit, Spotify, Twitter, Facebook, and many other companies **provide** free APIs that enable developers to access the information they store on their servers; others charge for access to their APIs.
 
 In this mission, we'll query a basic API to retrieve data about the [International Space Station](https://en.wikipedia.org/wiki/International_Space_Station) (ISS). Using an API will save us time and effort, instead of doing all the computation ourselves.
 
@@ -20,7 +30,7 @@ In this mission, we'll query a basic API to retrieve data about the [Internation
 
 Organizations host their APIs on **Web servers**. When you type `www.google.com` in your browser's address bar, your computer is actually asking the `www.google.com` server for a Web page, which it then returns to your browser.
 
-APIs work much the same way, except instead of your Web browser asking for a Web page, your program asks for data. The API usually returns this data in [JavaScript Object Notation](http://json.org/) (JSON) format. We'll discuss JSON more later on in this mission.
+APIs work much the same way, except instead of your Web browser asking for a Web page, your program asks for data. The API usually returns this data in [JavaScript Object Notation](http://json.org/) (JSON) format 以JSON格式返回数据. We'll discuss JSON more later on in this mission.
 
 We make an API request to the Web server we want to get data from. The server then replies and sends it to us. In Python, we use the [requests library](http://www.python-requests.org/en/latest/) to do this.
 
@@ -40,31 +50,31 @@ The first endpoint we'll look at on OpenNotify is the `iss-now.json` endpoint. T
 
 - The server will send a status code indicating the success or failure of your request. You can get the status code of the response from `response.status_code`.Assign the status code to the variable `status_code`.
 
-```
+```python
 # Make a get request to get the latest position of the ISS from the OpenNotify API.
+import requests
 response = requests.get("http://api.open-notify.org/iss-now.json")
-status_code = response.status_code
+status_code = response.status_code # 200
 ```
 
 ## 4: Understanding Status Codes
 
 The request we just made returned a **status code** of `200`. Web servers return status codes every time they receive an API request. A status code provides information about what happened with a request. Here are some codes that are relevant to *GET* requests:
 
-- `200` - Everything went okay, and the server returned a result (if any).
+- `200` - Everything went okay 一切正常, and the server returned a result (if any).
 - `301` - The server is redirecting you to a different endpoint. This can happen when a company switches domain names, or an endpoint's name has changed.
 - `401` - The server thinks you're not authenticated. This happens when you don't send the right credentials to access an API (we'll talk about this in a later mission).
 - `400` - The server thinks you made a bad request. This can happen when you don't send the information the API requires to process your request, among other things.
 - `403` - The resource you're trying to access is forbidden; you don't have the right permissions to see it.
-- `404` - The server didn't find the resource you tried to access.
+- `404` - The server didn't find the resource you tried to access 没找到.
 
 ### Instructions
 
 - Make a *GET* request to `http://api.open-notify.org/iss-pass`.Assign the status code of the response to `status_code`.
 
-```
-# Enter your answer below.
+```python
 response = requests.get("http://api.open-notify.org/iss-pass")
-status_code = response.status_code
+status_code = response.status_code # 404
 ```
 
 ## 5: Hitting The Right Endpoint
@@ -76,9 +86,8 @@ status_code = response.status_code
 - Make a *GET* request to `http://api.open-notify.org/iss-pass.json`.Assign the status code of the response to `status_code`.
 
 ```
-# Enter your answer below.
 response = requests.get("http://api.open-notify.org/iss-pass.json")
-status_code = response.status_code
+status_code = response.status_code # 400
 ```
 
 ## 6: Adding Query Parameters
@@ -94,7 +103,7 @@ To accomplish this, we can add an optional keyword argument, `params`, to our re
 - `lat` - The latitude of the location
 - `lon` - The longitude of the location
 
-We can make a dictionary that contains these parameters, and then pass them into the function.
+We can make a **dictionary** that contains these parameters, and then pass them into the function.
 
 We can also do the same thing directly by adding the query parameters to the url, like this:
 
@@ -106,7 +115,7 @@ It's almost always preferable to set up the parameters as a dictionary, because 
 
 - Use a dictionary and the `parameters` argument to get a response for the latitude `37.78` and the longitude `-122.41`(the coordinates of San Francisco).Retrieve the content of the response with `response.content`.Assign the content to the variable `content`.
 
-```
+```python
 # Set up the parameters we want to pass to the API.
 # This is the latitude and longitude of New York City.
 parameters = {"lat": 40.71, "lon": -74}
@@ -120,6 +129,7 @@ print(response.content)
 # This gets the same data as the command above
 response = requests.get("http://api.open-notify.org/iss-pass.json?lat=40.71&lon=-74")
 print(response.content)
+
 parameters = {"lat": 37.78, "lon": -122.41}
 response = requests.get("http://api.open-notify.org/iss-pass.json", params=parameters)
 content = response.content
