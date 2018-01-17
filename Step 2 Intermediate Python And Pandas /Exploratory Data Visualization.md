@@ -860,35 +860,16 @@ We can create a horizontal bar plot in matplotlib in a similar fashion. Instead 
 
 ```
 bar_widths = norm_reviews.ix[0, num_cols].values
-```
-
-```
 bar_positions = arange(5) + 0.75
-```
-
-```
 ax.barh(bar_positions, bar_widths, 0.5)
 ```
 
 To recreate the bar plot from the last step as horizontal bar plot, we essentially need to map the properties we set for the y-axis instead of the x-axis. We use `Axes.set_yticks()` to set the y-axis tick positions to `[1, 2, 3, 4, 5]` and `Axes.set_yticklabels()` to set the tick labels to the column names:
 
 ```
-
-```
-
-```
 tick_positions = range(5) + 1
-```
-
-```
 num_cols = ['RT_user_norm', 'Metacritic_user_nom', 'IMDB_norm', 'Fandango_Ratingvalue', 'Fandango_Stars']
-```
-
-```
 ax.set_yticks(tick_positions)
-```
-
-```
 ax.set_yticklabels(num_cols)
 ```
 
@@ -990,28 +971,14 @@ The second scatter plot is a mirror reflection of the first second scatter plot.
 When generating multiple scatter plots for the purpose of comparison, it's important that all plots share the same ranges in the x-axis and y-axis. In the 2 plots we generated in the last step, the ranges for both axes didn't match. We can use [Axes.set_xlim()](http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes.set_xlim) and [Axes.set_ylim()](http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes.set_ylim) to set the data limits for both axes:
 
 ```
-
-```
-
-```
 ax.set_xlim(0, 5)
-```
-
-```
 ax.set_ylim(0, 5)
 ```
 
 By default, matplotlib uses the minimal ranges for the data limits necessary to display all of the data we specify. By manually setting the data limits ranges to specific ranges for all plots, we're ensuring that we can accurately compare. We can even use the methods we just mentioned to zoom in on a part of the plots. For example, the following code will constrained the axes to the `4` to `5`range:
 
 ```
-
-```
-
-```
 ax.set_xlim(4, 5)
-```
-
-```
 ax.set_ylim(4, 5)
 ```
 
@@ -1071,10 +1038,6 @@ In this mission, we'll learn how to visualize the distributions of user ratings 
 Let's first compare the **frequency distributions** of user ratings from Fandango with those from IMDB using tables. A column's [frequency distribution](https://en.wikipedia.org/wiki/Frequency_distribution) consists of the unique values in that column along with the count for each of those values (or their frequency). We can use [Series.value_counts()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.value_counts.html) to return the frequency distribution as Series object:
 
 ```
-
-```
-
-```
 freq_counts = df['Fandango_Ratingvalue'].value_counts()
 ```
 
@@ -1085,14 +1048,7 @@ The resulting Series object will be sorted by frequency in descending order:
 While this ordering is helpful when we're looking to quickly find the most common values in a given column, it's not helpful when trying to understand the range that the values in the column span. We can use [Series.sort_index()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.sort_index.html) to sort the frequency distribution in ascending order by the values in the column (which make up the index for the Series object):
 
 ```
-
-```
-
-```
 freq_counts = df['Fandango_Ratingvalue'].value_counts()
-```
-
-```
 sorted_freq_counts = freq_counts.sort_index()
 ```
 
@@ -1107,7 +1063,6 @@ Here's what both frequency distributions look like side-by-side:
 - Use the `print()` function to display `fandango_distribution` and `imdb_distribution`.
 
 ```
-
 fandango_distribution = norm_reviews['Fandango_Ratingvalue'].value_counts()
 fandango_distribution = fandango_distribution.sort_index()
 

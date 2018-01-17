@@ -130,15 +130,9 @@ With the axis tick marks gone, the data-ink ratio is improved and the chart look
 
 In matplotlib, the spines are represented using the [matplotlib.spines.Spine](http://matplotlib.org/api/spines_api.html) class. When we create an Axes instance, four Spine objects are created for us. If you run `print(ax.spines)`, you'll get back a dictionary of the Spine objects:
 
-```
-
-```
 
 ```
 {'right': <matplotlib.spines.spine object="" at="" 0x111089c18="">, 'bottom': <matplotlib.spines.spine object="" at="" 0x111060898="">, 'top': <matplotlib.spines.spine object="" at="" 0x1110606a0="">, 'left': <matplotlib.spines.spine object="" at="" 0x11107cd30="">}
-```
-
-```
 </matplotlib.spines.spine></matplotlib.spines.spine></matplotlib.spines.spine></matplotlib.spines.spine>
 ```
 
@@ -150,9 +144,6 @@ To hide all of the spines, we need to:
 
 The following line of code removes the spines for the right axis:
 
-```
-
-```
 
 ```
 ax.spines["right"].set_visible(False)
@@ -292,15 +283,9 @@ The first color in the palette is a color that resembles dark blue and has the f
 
 To specify a line color using RGB values, we pass in a tuple of the values to the `c`parameter when we generate the line chart. Matplotlib expects each value to be scaled down and to range between 0 and 1 (not 0 and 255). In the following code, we scale the first color, which resembles dark blue, in the Color Blind 10 palette and set it as the line color:
 
-```
-
-```
 
 ```
 cb_dark_blue = (0/255,107/255,164/255)
-```
-
-```
 ax.plot(women_degrees['Year'], women_degrees['Biology'], label='Women', c=cb_dark_blue)
 ```
 
@@ -355,9 +340,6 @@ By default, the actual lines reflecting the underlying data in the line charts w
 
 When we call the `Axes.plot()` method, we can use the `linewidth` parameter to specify the line width. Matplotlib expects a float value for this parameter:
 
-```
-
-```
 
 ```
 ax.plot(women_degrees['Year'], women_degrees['Biology'], label='Women', c=cb_dark_blue, linewidth=2)
@@ -494,9 +476,6 @@ To add text annotations to a matplotlib plot, we use the [Axes.text()](http://ma
 
 The values in the coordinate grid match exactly with the data ranges for the x-axis and the y-axis. If we want to add text at the intersection of `1970` from the x-axis and `0` from the y-axis, we would pass in those values:
 
-```
-
-```
 
 ```
 ax.text(1970, 0, "starting point")
@@ -512,20 +491,6 @@ ax.text(1970, 0, "starting point")
   - The string `"Women"` at the x-axis coordinate of `2001`and the y-axis coordinate of `35`.
 
 ```
-fig = plt.figure(figsize=(18, 3))
-
-for sp in range(0,6):
-    ax = fig.add_subplot(1,6,sp+1)
-    ax.plot(women_degrees['Year'], women_degrees[stem_cats[sp]], c=cb_dark_blue, label='Women', linewidth=3)
-    ax.plot(women_degrees['Year'], 100-women_degrees[stem_cats[sp]], c=cb_orange, label='Men', linewidth=3)
-    for key,spine in ax.spines.items():
-        spine.set_visible(False)
-    ax.set_xlim(1968, 2011)
-    ax.set_ylim(0,100)
-    ax.set_title(stem_cats[sp])
-    ax.tick_params(bottom="off", top="off", left="off", right="off")
-plt.legend(loc='upper right')
-plt.show()
 fig = plt.figure(figsize=(18, 3))
 
 for sp in range(0,6):
@@ -566,19 +531,10 @@ In this guided project, we'll extend the work we did in the last two missions on
 
 Because there are seventeen degrees that we need to generate line charts for, we'll use a subplot grid layout of 6 rows by 3 columns. We can then group the degrees into STEM, liberal arts, and other, in the following way:
 
-```
-
-```
 
 ```
 stem_cats = ['Psychology', 'Biology', 'Math and Statistics', 'Physical Sciences', 'Computer Science', 'Engineering', 'Computer Science']
-```
-
-```
 lib_arts_cats = ['Foreign Languages', 'English', 'Communications and Journalism', 'Art and Performance', 'Social Sciences and History']
-```
-
-```
 other_cats = ['Health Professions', 'Public Administration', 'Education', 'Agriculture','Business', 'Architecture']
 ```
 
@@ -605,9 +561,6 @@ While in the last mission, the `stem_cats`list was ordered by ending gender gap,
 
 With seventeen line charts in one diagram, the non-data elements quickly clutter the field of view. The most immediate issue that sticks out is the titles of some line charts overlapping with the x-axis labels for the line chart above it. If we remove the titles for each line chart, the viewer won't know what degree each line chart refers to. Let's instead remove the x-axis labels for every line chart in a column except for the bottom most one. We can accomplish this by modifying the call to [`Axes.tick_params()`](http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes.tick_params) and setting `labelbottom` to `off`:
 
-```
-
-```
 
 ```
 ax.tick_params(bottom="off", top="off", left="off", right="off", labelbottom='off')
@@ -615,9 +568,6 @@ ax.tick_params(bottom="off", top="off", left="off", right="off", labelbottom='of
 
 This will disable the x-axis labels for all of the line charts. You can then enable the x-axis labels for the bottommost line charts in each column:
 
-```
-
-```
 
 ```
 ax.tick_params(labelbottom='on')
@@ -636,9 +586,6 @@ In the vein of reducing cluttering, let's also simplify the y-axis labels. Curre
 
 We can use the [Axes.set_yticks()](http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes.set_yticks) method to specify which labels we want displayed. The following code enables just the `0`and `100` labels to be displayed:
 
-```
-
-```
 
 ```
 ax.set_yticks([0,100])
@@ -656,9 +603,6 @@ While removing most of the y-axis labels definitely reduced clutter, it also mad
 
 We can generate a horizontal line across an entire subplot using the [Axes.axhline()](http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes.axhline) method. The only required parameter is the y-axis location for the start of the line:
 
-```
-
-```
 
 ```
 ax.axhline(50)
@@ -666,9 +610,6 @@ ax.axhline(50)
 
 Let's use the next color in the [Color Blind 10 palette](http://tableaufriction.blogspot.ro/2012/11/finally-you-can-use-tableau-data-colors.html) for this horizontal line, which has an RGB value of (171, 171, 171). Because we don't want this line to clutter the viewing experience, let's increase the transparency of the line. We can set the color using the `c` parameter and the transparency using the `alpha` parameter. The value passed in to the `alpha`parameter must range between `0` and `1`:
 
-```
-
-```
 
 ```
 ax.axhline(50, c=(171/255, 171/255, 171/255), alpha=0.3)
@@ -689,15 +630,9 @@ If you recall, matplotlib can be used many different ways. It can be used within
 
 With the current backend we're using, we can use [Figure.savefig()](http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.savefig) or [pyplot.savefig()](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.savefig) to export all of the plots contained in the figure as a single image file. Note that these have to be called before we display the figure using `pyplot.show()`.:
 
-```
-
-```
 
 ```
 plt.plot(women_degrees['Year'], women_degrees['Biology'])
-```
-
-```
 plt.savefig('biology_degrees.png')
 ```
 
@@ -785,23 +720,11 @@ Seaborn works similarly to the `pyplot`module from matplotlib. We primarily use 
 
 To get familiar with seaborn, we'll start by creating the familiar histogram. We can generate a histogram of the `Fare` column using the [`seaborn.distplot()`](http://seaborn.pydata.org/generated/seaborn.distplot.html#seaborn.distplot) function:
 
-```
-
-```
 
 ```
 # seaborn is commonly imported as `sns`.
-```
-
-```
 import seaborn as sns
-```
-
-```
 sns.distplot(titanic["Fare"])
-```
-
-```
 plt.show()
 ```
 
@@ -830,9 +753,6 @@ plt.show()
 
 While having both the histogram and the kernel density plot is useful when we want to explore the data, it can be overwhelming for someone who's trying to understand the distribution. To generate just the kernel density plot, we use the [`seaborn.kdeplot()`](http://seaborn.pydata.org/generated/seaborn.kdeplot.html#seaborn.kdeplot) function:
 
-```
-
-```
 
 ```
 sns.kdeplot(titanic["Fare"])
@@ -883,20 +803,12 @@ Here's a diagram that compares the same plot across all styles:
 By default, the seaborn style is set to `"darkgrid"`:
 
 ```
-
-```
-
-```
 sns.set_style("darkgrid")
 ```
 
 If we change the style sheet using this method, all future plots will match that style in your current session. This means you need to set the style before generating the plot.
 
 To remove the axis spines for the top and right axes, we use the [`seaborn.despine()`](http://seaborn.pydata.org/generated/seaborn.despine.html#seaborn.despine)function:
-
-```
-
-```
 
 ```
 sns.despine()
@@ -930,23 +842,11 @@ Here's what those plots look like:
 
 The code to generate the pair of plots, is short and sweet:
 
-```
-
-```
 
 ```
 # Condition on unique values of the "Survived" column.
-```
-
-```
 g = sns.FacetGrid(titanic, col="Survived", size=6)
-```
-
-```
 # For each subset of values, generate a kernel density plot of the "Age" columns.
-```
-
-```
 g.map(sns.kdeplot, "Age", shade=True)
 ```
 
@@ -963,14 +863,7 @@ Once we've created the grid, we use the `FacetGrid.map()` method to specify the 
 The function that's passed into `FacetGrid.map()` has to be a valid matplotlib or seaborn function. For example, we can map matplotlib histograms to the grid:
 
 ```
-
-```
-
-```
 g = sns.FacetGrid(titanic, col="Survived", size=6)
-```
-
-```
 g.map(plt.hist, "Age")
 ```
 
@@ -1123,9 +1016,6 @@ Basemap makes it easy to convert from the spherical coordinate system (latitudes
 
 The easiest way to install basemap is through Anaconda. If you're new to Anaconda, we recommend checking out our [Python and Pandas installation project](https://www.dataquest.io/mission/118/project-python-and-pandas-installation):
 
-```
-
-```
 
 ```
 conda install basemap
@@ -1178,9 +1068,6 @@ m = Basemap(projection='merc',llcrnrlat=-80,urcrnrlat=80,llcrnrlon=-180,urcrnrlo
 
 As we mentioned before, we need to convert latitude and longitude values to Cartesian coordinates to display them on a two-dimensional map. We can pass in a list of latitude and longitude values into the basemap instance and it will return back converted lists of longitude and latitude values using the projection we specified earlier. The constructor only accepts list values, so we'll need to use [Series.tolist()](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.tolist.html) to convert the `longitude`and `latitude` columns from the `airports` dataframe to lists. Then, we pass them to the basemap instance with the longitude values first then the latitude values:
 
-```
-
-```
 
 ```
 x, y = m(longitudes, latitudes)
@@ -1205,9 +1092,6 @@ x, y = m(longitudes, latitudes)
 
 Now that the data is in the right format, we can plot the coordinates on a map. A scatter plot is the simplest way to plot points on a map, where each point is represented as an (x, y) coordinate pair. To create a scatter plot from a list of `x`and `y` coordinates, we use the [basemap.scatter()](http://matplotlib.org/basemap/api/basemap_api.html#mpl_toolkits.basemap.Basemap.scatter) method.
 
-```
-
-```
 
 ```
 m.scatter(x,y)
@@ -1215,23 +1099,11 @@ m.scatter(x,y)
 
 The `basemap.scatter()` method has similar parameters to the [pyplot.scatter()](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.scatter). For example, we can customize the size of each marker using the `s` parameter:
 
-```
-
-```
 
 ```
 # Large markers.
-```
-
-```
 m.scatter(x,y,s=10)
-```
-
-```
 # Smaller markers.
-```
-
-```
 m.scatter(x,y,s=5)
 ```
 
@@ -1344,19 +1216,10 @@ We use the [basemap.drawgreatcircle()](http://matplotlib.org/basemap/api/basemap
 
 The following code generates a great circle for the first three routes in the dataframe:
 
-```
-
-```
 
 ```
 m.drawgreatcircle(39.956589, 43.449928, 49.278728, 55.606186)
-```
-
-```
 m.drawgreatcircle(48.006278, 46.283333, 49.278728, 55.606186)
-```
-
-```
 m.drawgreatcircle(39.956589, 43.449928, 43.081889 , 44.225072)
 ```
 
