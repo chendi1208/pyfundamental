@@ -1594,14 +1594,7 @@ For this project, you'll be cleaning and exploring the data set in Jupyter noteb
 The following code will read the data into a pandas dataframe:
 
 ```
-
-```
-
-```
 import pandas as pd
-```
-
-```
 star_wars = pd.read_csv("star_wars.csv", encoding="ISO-8859-1")
 ```
 
@@ -1634,15 +1627,9 @@ First, you'll need to remove the invalid rows. For example, `RespondentID` is su
 
 Take a look at the next two columns, which are:
 
-```
-
-```
 
 ```
 * `Have you seen any of the 6 films in the Star Wars franchise?`
-```
-
-```
 * `Do you consider yourself to be a fan of the Star Wars film franchise?`
 ```
 
@@ -1654,9 +1641,6 @@ We can use the [pandas.Series.map()](http://pandas.pydata.org/pandas-docs/versio
 
 For example, imagine we have a series that looks like this:
 
-```
-
-```
 
 ```
 series = ["Yes", "No", NaN, "Yes"]
@@ -1664,31 +1648,16 @@ series = ["Yes", "No", NaN, "Yes"]
 
 We can use a dictionary to define a mapping from each value in `series` to a new value:
 
-```
-
-```
 
 ```
 yes_no = {
-```
-
-```
     "Yes": True,
-```
-
-```
     "No": False
-```
-
-```
 }
 ```
 
 Then, we can call the map() function to perform the mapping:
 
-```
-
-```
 
 ```
 series = series.map(yes_no)
@@ -1696,9 +1665,6 @@ series = series.map(yes_no)
 
 `series` will end up looking like this:
 
-```
-
-```
 
 ```
 [True, False, NaN, True]
@@ -1729,9 +1695,6 @@ We'll need to convert each of these columns to a Boolean, then rename the column
 
 For example, imagine we had this column series:
 
-```
-
-```
 
 ```
 ["Star Wars: Episode I  The Phantom Menace", NaN, "Star Wars: Episode I  The Phantom Menace"]
@@ -1739,23 +1702,11 @@ For example, imagine we had this column series:
 
 We could convert the values using this mapping dictionary:
 
-```
-
-```
 
 ```
 {
-```
-
-```
     "Star Wars: Episode I  The Phantom Menace": True,
-```
-
-```
     NaN: False
-```
-
-```
 }
 ```
 
@@ -1765,19 +1716,10 @@ Next, we'll need to rename the columns to better reflect what they represent. We
 
 The `df.rename()` method works a lot like `map()`. We pass it a dictionary that maps the current column names to new ones:
 
-```
-
-```
 
 ```
 star_wars = star_wars.rename(columns={
-```
-
-```
     "Which of the following Star Wars films have you seen? Please select all that apply.": "seen_1"
-```
-
-```
 })
 ```
 
@@ -1804,9 +1746,6 @@ Fortunately, these columns don't require a lot of cleanup. We'll need to convert
 
 We can do the numeric conversion with the [pandas.DataFrame.astype()](http://pandas.pydata.org/pandas-docs/version/0.17.1/generated/pandas.DataFrame.astype.html) method on dataframes. In this case, we can use code that looks like this:
 
-```
-
-```
 
 ```
 star_wars[star_wars.columns[9:15]] = star_wars[star_wars.columns[9:15]].astype(float)
@@ -1850,15 +1789,9 @@ We know which movies the survey population as a whole has ranked the highest. No
 
 We can split a dataframe into two groups based on a binary column by creating two subsets of that column. For example, we can split on the `Gender` column like this:
 
-```
-
-```
 
 ```
 males = star_wars[star_wars["Gender"] == "Male"]
-```
-
-```
 females = star_wars[star_wars["Gender"] == "Female"]
 ```
 
